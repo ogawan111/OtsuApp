@@ -10,14 +10,12 @@
                 <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items">
                     <ons-row ng-click="toDetail()">
                         <ons-col class="col1">
-                            <img src="img/searchlist_mod_pic1.jpg" height="130" width="130" class="thumbnail">
+                            <img ng-src="{{item.imageURL.src}}" height="130" width="130" class="thumbnail">
                         </ons-col>
                         <ons-col class="col2">
-                            <div class="name" ng-item="item.">
-                                西行桜狸山
+                            <div class="name" ng-bind="item.title">
                             </div>
-                            <div class="yomi">
-                                （さいぎょうざくら たぬきやま）
+                            <div class="yomi" ng-bind="item.furigana">
                             </div>
                             <div class="kyori">
                                 曳山までの距離：10m

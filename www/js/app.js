@@ -8,6 +8,7 @@
     var listDialog = null;
 
     document.addEventListener('deviceready', function() {
+        localStorage.clear();
         angular.bootstrap(document, ['app']);
     }, false);
 
@@ -21,7 +22,7 @@
     /**
      * TOPページのコントローラ
      */
-    module.controller('AppController', function($scope, $http, SERVER_URL, beaconService, store) {
+    module.controller('AppController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
 
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
@@ -44,18 +45,30 @@
             };
 
             delegate.didEnterRegion = function(pluginResult) {
-                  cordova.plugins.locationManager.appendToDeviceLog('[DOM] didEnterRegion: '
-        + JSON.stringify(pluginResult));
-              navigator.notification.alert('didEnterRegion:' + JSON.stringify(pluginResult));
+                var beacon = pluginResult.region;
+
                 navigator.notification.alert('ビーコンを検出しました:', function() {
-                    ons.createDialog('page/pop_list.html').then(function(dialog) {
-                        dialog.show();
+                    var detailResult = beaconService.getDetail(beacon.identifier);
+
+                    detailResult.then(function(msg) {
+                        if (null === listDialog) {
+                            ons.createDialog('page/pop_list.html').then(function(dialog) {
+                                listDialog = dialog.show();
+                            });
+                        }
+                    }, function(msg) {
+                        navigator.notification.alert(msg, function() {});
                     });
                 });
             };
 
             delegate.didExitRegion = function(pluginResult) {
+                var beacon = pluginResult.region;
+
                 // navigator.notification.alert('didExitRegion:' + JSON.stringify(pluginResult));
+                navigator.notification.alert('ビーコンが離れていきました', function() {
+                    hikiyamaService.removeItem(beacon.identifier);
+                });
             };
 
             cordova.plugins.locationManager.setDelegate(delegate);
@@ -64,18 +77,11 @@
             angular.forEach(beaconList, function(beacon, i) {
                 var bObj = beacon.beacon;
 
-                var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(bObj.Identifer, bObj.UUID, bObj.Major, bObj.Minor);
+                var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(bObj.Identifier, bObj.UUID, bObj.Major, bObj.Minor);
                 cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
                     .fail(console.error)
-                    .done(navigator.notification.alert('test'));
-                // navigator.notification.alert('uuid : ' + beacon.beacon.uuid);
+                    .done();
             });
-
-            // navigator.notification.alert(msg, function() {
-            //     ons.createDialog('page/pop_list.html').then(function(dialog) {
-            //         dialog.show();
-            //     });
-            // });
 
         }, function(msg) {
             navigator.notification.alert(msg, function() {});
@@ -89,10 +95,12 @@
 
     module.controller('ListController', function($scope, $http, SERVER_URL, beaconService, store) {
 
-        $scope.items = store.get('beacons');
+        $scope.items = store.get('hikiyamas');
 
-        $scope.$on('beacon:changeList', function(data) {
-            $scope.items = store.get('beacons');
+        $scope.$on('hikiyama:changeList', function(data) {
+            navigator.notification.alert('hikiyama:changeList', function(){
+                $scope.items = store.get('hikiyamas');
+            });
         });
 
         $scope.toDetail = function() {
@@ -136,15 +144,48 @@
             getDetail: function(identifier, callback) {
                 var defer = $q.defer();
 
-                $http.get(SERVER_URL + 'hikiyama-detail' + '?identifier=' + identifier).then(function(response) {
-                    service.detailObj = response.data.hikiyamas.hikiyama;
+                $http.get(SERVER_URL + 'hikiyama-detail?identifier=' + identifier).then(function(response) {
+                    var obj = response.data.hikiyamas[0].hikiyama;
+
+                    var hikiyamas = store.get('hikiyamas');
+                    if (hikiyamas === void 0 || hikiyamas === null) {
+                        hikiyamas = [];
+                    }
+                    obj.identifier = identifier;
+                    hikiyamas.push(obj);
+                    store.set('hikiyamas', hikiyamas);
+
                     if (typeof callback == 'function') {
                         callback(response.data.hikiyamas.hikiyama);
                     }
-                    return defer.promise;
+                    $rootScope.$broadcast('hikiyama:changeList', hikiyamas);
+                    defer.resolve('success');
                 }).then(function(response) {
-                    return defer.reject();
+                    defer.reject('failure');
                 });
+                return defer.promise;
+            }
+        };
+        return service;
+    });
+
+    module.factory('hikiyamaService', function($http, $q, $rootScope, $timeout, store, SERVER_URL) {
+        var service = {
+            addItem: function() {},
+            removeItem: function(identifier) {
+                var hikiyamaList = store.get('hikiyamas');
+
+                for(var i=0; i< hikiyamaList.length; i++) {
+                    var hikiyama = hikiyamaList[i];
+                    if(hikiyama.identifier == identifier) {
+                        hikiyamaList.splice(i, 1);
+                        store.set('hikiyamas', hikiyamaList);
+                        break;
+                    }
+                }
+                $timeout(function(){
+                    $rootScope.$broadcast('hikiyama:changeList', store.get('hikiyamas'));
+                }, 500);
             }
         };
         return service;
