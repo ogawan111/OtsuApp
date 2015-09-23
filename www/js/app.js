@@ -5,8 +5,6 @@
     module.constant('APP_NAME', '大津市祭り');
     module.constant('SERVER_URL', 'http://ec2-52-24-104-59.us-west-2.compute.amazonaws.com/drupal/');
 
-    var listDialog = null;
-
     document.addEventListener('deviceready', function() {
         localStorage.clear();
         angular.bootstrap(document, ['app']);
@@ -22,7 +20,7 @@
     /**
      * TOPページのコントローラ
      */
-    module.controller('AppController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
+    module.controller('AppController', function($scope, $rootScope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
 
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
@@ -41,7 +39,9 @@
             };
 
             delegate.didRangeBeaconsInRegion = function(pluginResult) {
-                //navigator.notification.alert('didRangeBeaconsInRegion:' + JSON.stringify(pluginResult));
+                //console.log(JSON.stringify(pluginResult));
+cordova.plugins.locationManager.appendToDeviceLog('[DOM] didRangeBeaconsInRegion: '
+        + JSON.stringify(pluginResult));
             };
 
             delegate.didEnterRegion = function(pluginResult) {
@@ -51,9 +51,10 @@
                     var detailResult = beaconService.getDetail(beacon.identifier);
 
                     detailResult.then(function(msg) {
-                        if (null === listDialog) {
+                        if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
                             ons.createDialog('page/pop_list.html').then(function(dialog) {
-                                listDialog = dialog.show();
+                                $rootScope.listDialog = dialog;
+                                $rootScope.listDialog.show();
                             });
                         }
                     }, function(msg) {
@@ -98,9 +99,7 @@
         $scope.items = store.get('hikiyamas');
 
         $scope.$on('hikiyama:changeList', function(data) {
-            navigator.notification.alert('hikiyama:changeList', function(){
-                $scope.items = store.get('hikiyamas');
-            });
+            $scope.items = store.get('hikiyamas');
         });
 
         $scope.toDetail = function() {
@@ -180,6 +179,11 @@
                     if(hikiyama.identifier == identifier) {
                         hikiyamaList.splice(i, 1);
                         store.set('hikiyamas', hikiyamaList);
+
+                        if(hikiyamaList.length === 0) {
+                            $rootScope.listDialog.hide();
+                            $rootScope.listDialog = null;
+                        }
                         break;
                     }
                 }
