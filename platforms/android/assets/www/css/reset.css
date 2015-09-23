@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+
+body,h1,h2,h3,h4,h5,h6,p,ol,ul,li,dl,dt,dd,form,input,textarea,select,fieldset,legend {
+	margin:0;
+	padding:0;
+}
+img {
+	border: none;
+	vertical-align:top;
+}
+p,li,address,table,dt,dd{
+	line-height: 150%;
+}
+ul,ol{
+	list-style: none;
+}
+
+a:link {
+	color: #0047b2;
+	text-decoration: underline;
+}
+a:visited {
+	color: #004762;
+	text-decoration: underline;
+}
+a:hover {
+	color: #004762;
+	text-decoration: none;
+}
+
+
+
+/*iphoneでルビで文字サイズが勝手に変わるのを修正*/
+body {
+	-webkit-text-size-adjust: 100%;
+}
+

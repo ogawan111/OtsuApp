@@ -1,46 +1,53 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en">
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- JS dependencies (order matters!) -->
+    <script src="js/platformOverrides.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/a0-angular-storage/dist/angular-storage.min.js"></script>
+    <script src="bower_components/OnsenUI/build/js/onsenui.min.js"></script>
+    <script src="bower_components/design/jquery.js"></script>
+    <script src="bower_components/design/sp.js"></script>
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="bower_components/OnsenUI/build/css/onsenui.css" />
+    <link rel="stylesheet" href="bower_components/OnsenUI/build/css/onsen-css-components.css" />
+    <link href="css/import_sp.css" rel="stylesheet" type="text/css">
+    <!-- --------------- App init --------------- -->
+    <script src="js/app.js"></script>
+    <title>Onsen UI Master-Details</title>
+</head>
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+<body ng-controller="AppController">
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <!-- -->
+    <ons-navigator var="navi">
+        <ons-page>
+            <div id="wrapper">
+                <h1 id="appLogo"><img src="img/applogo.png" height="339" width="518" alt=""></h1>
+                <p id="hikiyamaSearch">
+                    <span class="anime"><img src="img/hikiyamasearch_anime.gif" height="142" width="154" alt=""></span>
+                    <span class="bg"><img src="img/hikiyamasearch_search.png" height="264" width="264" alt=""></span>
+                </p>
             </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+            <p id="hikiyamaListBtn">
+                <a class="btn" href="#"><img src="img/hikiyamalistbtn_btn.png" height="31" width="257" alt=""></a>
+            </p>
+        </ons-page>
+        <section class="fadeBgMod">
+            <ul class="list">
+                <li><img src="img/fadebg_mod_1.jpg" height="1096" width="640" alt=""></li>
+                <li><img src="img/fadebg_mod_2.jpg" height="1096" width="640" alt=""></li>
+                <li><img src="img/fadebg_mod_3.jpg" height="1096" width="640" alt=""></li>
+            </ul>
+        </section>
+    </ons-navigator>
+</body>
+
 </html>
