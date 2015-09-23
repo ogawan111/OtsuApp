@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+
+/*エディタの中のみ*/
+body.wysiwygCom {
+	padding: 10px;
+	background-color: #FFF;
+}
+.wysiwygCom ul {
+	padding-left: 20px;
+	list-style: disc;
+	margin-top:10px;
+	/*回り込み画像時にリストが出ない問題を解決*/
+	overflow:hidden;
+}
+* html .wysiwygCom ul {
+	display:inline-block;
+}
+.wysiwygCom ol {
+	/*IE7 100の位まで対応*/
+	padding-left: 50px;
+	list-style: decimal;
+	margin-top:10px;
+	/*回り込み画像時にリストが出ない問題を解決*/
+	overflow:hidden;
+}
+* html .wysiwygCom ol {
+	display:inline-block;
+}
+.wysiwygCom p {
+	margin-top:10px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.wysiwygCom table {
+	border-collapse: collapse;
+	border: 1px solid #cccccc;
+	margin-top: 10px;
+}
+.wysiwygCom table td, .wysiwygCom table th {
+	border-collapse: collapse;
+	border: 1px solid #B1B1B1;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+.wysiwygCom table th {
+	background-color: #E8F4ED;
+}
+.wysiwygCom table caption {
+	text-align: left;
+	font-weight: bold;
+}
+.wysiwygCom div {
+	line-height: 150%;
+	margin-top:10px;
+}
+
+
+
+
+h2.headCom, .wysiwygCom h2 {
+	font-size: 140%;
+	padding: 5px;
+	border-left: 5px solid #333;
+	background-color: #666;
+	margin-top: 20px;
+	color: #fff;
+}
+
+h3.headCom, .wysiwygCom h3 {
+	border: 1px solid #ccc;
+	border-left: 5px solid #999;
+	background-color: #eee;
+	font-size: 120%;
+	padding: 2px;
+	padding-left: 5px;
+	margin-top: 20px;
+}
+
+
+h4.headCom, .wysiwygCom h4 {
+	/*border-bottom: 2px dotted #999;*/
+	border: 1px solid #ccc;
+	border-left: 5px solid #ccc;
+	font-size: 100%;
+	padding: 2px;
+	padding-left: 4px;
+	margin-top: 20px;
+}
+
+
+h5.headCom, .wysiwygCom h5 {
+	border-left: 3px solid #ccc;
+	border-bottom: 1px dotted #aaa;
+	font-size: 100%;
+	padding-bottom: 0px;
+	padding-left: 7px;
+	margin-top: 20px;
+}
+
+
+h6.headCom, .wysiwygCom h6 {
+	border-left: 3px solid #ccc;
+	font-size: 100%;
+	padding-left: 7px;
+	margin-top: 20px;
+}
+
+
+
+
+
+.wysiwygCom .col {
+	width:700px;
+	overflow:hidden;
+}
+.wysiwygCom .L {
+	width:330px;
+	float:left;
+}
+.wysiwygCom .R {
+	width:330px;
+	float:right;
+}
+
+/*cke_panel_listをいれなければリストにもスタイルが効かない*/
+.wysiwygCom .text_, .cke_panel_list .text_ {
+	color: #c00;
+}
+.wysiwygCom .text2_, .cke_panel_list .text2_{
+	color: #00c;
+}
+

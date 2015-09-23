@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+
+.clearFix:after{
+	content:".";
+	display: block;
+	height: 0px;
+	clear: both;
+	visibility: hidden;
+}
+.clearFix{
+	display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clearFix{height: 1%;}
+.clearFix{display: block;}
+/* End hide from IE-mac */
+*:first-child+html .clearFix { zoom: 1; } /* IE7 */
+

@@ -1,0 +1,32 @@
+<ons-dialog var="dialog" class="searchListMod" cancelable>
+    <ons-navigator var="navi">
+        <ons-page>
+            <ons-toolbar inline>
+                <div class="center">
+                    <img src="img/searchlist_mod_find.png" height="41" width="515" alt="">
+                </div>
+            </ons-toolbar>
+            <ons-list ng-controller="ListController">
+                <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items">
+                    <ons-row ng-click="toDetail()">
+                        <ons-col class="col1">
+                            <img src="img/searchlist_mod_pic1.jpg" height="130" width="130" class="thumbnail">
+                        </ons-col>
+                        <ons-col class="col2">
+                            <div class="name" ng-item="item.">
+                                西行桜狸山
+                            </div>
+                            <div class="yomi">
+                                （さいぎょうざくら たぬきやま）
+                            </div>
+                            <div class="kyori">
+                                曳山までの距離：10m
+                            </div>
+                        </ons-col>
+                        <ons-col width="20px"></ons-col>
+                    </ons-row>
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+    </ons-navigator>
+</ons-dialog>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- JS dependencies (order matters!) -->
+    <script src="js/platformOverrides.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/a0-angular-storage/dist/angular-storage.min.js"></script>
+    <script src="bower_components/OnsenUI/build/js/onsenui.min.js"></script>
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="bower_components/OnsenUI/build/css/onsenui.css" />
+    <link rel="stylesheet" href="bower_components/OnsenUI/build/css/onsen-css-components.css" />
+    <link href="css/import_sp.css" rel="stylesheet" type="text/css">
+    <!-- --------------- App init --------------- -->
+    <script src="js/app.js"></script>
+    <title>Onsen UI Master-Details</title>
+</head>
+
+<body ng-controller="AppController">
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <!-- -->
+    <ons-navigator var="navi">
+        <ons-page>
+            <div id="wrapper">
+                <h1 id="appLogo"><img src="img/applogo.png" height="339" width="518" alt=""></h1>
+                <p id="hikiyamaSearch">
+                    <span class="anime"><img src="img/hikiyamasearch_anime.gif" height="142" width="154" alt=""></span>
+                    <span class="bg"><img src="img/hikiyamasearch_search.png" height="264" width="264" alt=""></span>
+                </p>
+            </div>
+        </ons-page>
+    </ons-navigator>
+</body>
+
+</html>
