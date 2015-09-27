@@ -21,7 +21,6 @@
      * TOPページのコントローラ
      */
     module.controller('AppController', function($scope, $rootScope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
-
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
         result.then(function(msg) {
@@ -98,7 +97,6 @@
 
 
     module.controller('ListController', function($scope, $http, SERVER_URL, beaconService, store) {
-
         $scope.items = store.get('hikiyamas');
 
         $scope.$on('hikiyama:changeList', function(data) {
@@ -111,6 +109,29 @@
             });
         };
     });
+ 
+    module.controller('DetailController', function($scope, $http, SERVER_URL, beaconService, store) {
+                   
+       $scope.items = store.get('hikiyamas');
+       
+                      $('.bxslider').bxSlider({
+                          mode: 'horizontal',
+                          controls: false,
+                          captions: false
+                      });
+                      
+                      
+                      
+                      
+                      $('.accordionMod').accordion({
+                           classHead:'.title',
+                           classBody:'.in',
+                           classToggle:'on'
+                       });
+                      
+
+      
+   });
 
     /**
      * Beacon情報関連のService
