@@ -93,6 +93,38 @@ body {
 
 }
 
+/*背景*/
+body {
+    background: url(../img/wrapper_bg.jpg) !important;
+}
+.paperBgCom {
+    background: url(../img/wrapper_bg.jpg) !important;
+}
+
+/*ナビゲーションバー*/
+.imgNavBarCom.navigation-bar {
+    height: auto !important;
+}
+
+.imgNavBarCom.navigation-bar .navigation-bar__title {
+    padding: 15px;
+    height: auto !important;
+    float: none !important;
+    line-height: normal !important;
+}
+.imgNavBarCom.navigation-bar .navigation-bar__title img {
+    width: 100%;
+    height: auto;
+}
+.redNavBarCom.navigation-bar {
+    background-color: #820000 !important;
+    border-bottom: 1px solid #470000 !important;
+}
+
+.redNavBarCom.navigation-bar .navigation-bar__title, .redNavBarCom.navigation-bar .toolbar-button--quiet {
+    color: #fff !important;
+}
+
 
 /*daialog*/
 .dialog  {
@@ -105,22 +137,7 @@ body {
 	line-height: 140% !important;
 	padding: 15px !important;
 }
-.searchListMod .navigation-bar {
-	height: auto !important;
-}
-.searchListMod .navigation-bar__title {
-}
-.searchListMod .navigation-bar__title {
-	padding: 15px;
-	height: auto !important;
-	float: none !important;
-	line-height: normal !important;
-}
-.searchListMod .navigation-bar__title img {
-	width: 100%;
-	height: auto;
 
-}
 .searchListMod .col1 {
 	  -webkit-box-flex: 0.4;
   -webkit-flex: 0.4;
@@ -156,16 +173,7 @@ body {
 
 
 
-.navigation-bar {
-	background-color: #820000 !important;
-	border-bottom: 1px solid #470000 !important;
 
-}
-
-.navigation-bar__title, .ons-back-button__icon {
-	color: #fff !important;
-
-}
 
 .bx-wrapper {
 	padding: 10px !important;
@@ -196,10 +204,7 @@ body {
 }
 
 
-body {
-	background-image: url(../img_sp/wrapper_bg.jpg);
 
-}
 #wrapper {
 	padding-bottom: 10px;
 }
@@ -217,14 +222,14 @@ h2.headCom
 	padding: 5px;
 }
 .accordionMod .title {
-	background-image: url(../img_sp/accordion_mod_plus.png);
+	background-image: url(../img/accordion_mod_plus.png);
 	padding-left: 40px;
 	background-repeat: no-repeat;
 	
 	background-position: 5px center;
 }
 .accordionMod .title.on {
-	background-image: url(../img_sp/accordion_mod_minus.png);
+	background-image: url(../img/accordion_mod_minus.png);
 }
 
 iframe {
@@ -269,22 +274,22 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
 	height: auto;
 }
 
-
     .stampListMod .ls {
       overflow: hidden;
       width: 100%;
-      padding-right: 20px;
+      padding-right: 10px;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      padding-bottom: 10px;
       
     }
     .stampListMod .ls li {
-      margin-top: 20px;
+      margin-top: 10px;
       width: 50%;
 
       vertical-align: top;
-      padding-left: 20px;
+      padding-left: 10px;
       
       float: left;
       -webkit-box-sizing: border-box;
@@ -346,7 +351,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
       
       padding: 10px;
 
-      background-image: url(../img_sp/stamplist_mod_stamp_off.png);
+      background-image: url(../img/stamplist_mod_stamp_off.png);
       padding-left: 50px;
       background-repeat: no-repeat;
       background-position: 10px 10px;
@@ -354,7 +359,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
 
     }
     .stampListMod .ls li .stampOn {
-      background-image: url(../img_sp/stamplist_mod_stamp_on.png);
+      background-image: url(../img/stamplist_mod_stamp_on.png);
 
     
     }
