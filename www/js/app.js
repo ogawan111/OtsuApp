@@ -21,6 +21,12 @@
      * TOPページのコントローラ
      */
     module.controller('AppController', function($scope, $rootScope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
+          $scope.toList = function() {
+              $scope.navi.pushPage('page/list.html', {
+                   animation: 'slide'
+               });
+          };
+                      
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
         result.then(function(msg) {

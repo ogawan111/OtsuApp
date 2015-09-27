@@ -93,6 +93,14 @@ body {
 
 }
 
+/*背景*/
+body {
+    background: url(../img/wrapper_bg.jpg) !important;
+}
+.paperBgCom {
+    background: url(../img/wrapper_bg.jpg) !important;
+}
+
 /*ナビゲーションバー*/
 .imgNavBarCom.navigation-bar {
     height: auto !important;
@@ -196,10 +204,7 @@ body {
 }
 
 
-body {
-	background-image: url(../img_sp/wrapper_bg.jpg);
 
-}
 #wrapper {
 	padding-bottom: 10px;
 }
