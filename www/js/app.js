@@ -21,9 +21,16 @@
      * TOPページのコントローラ
      */
     module.controller('AppController', function($scope, $rootScope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
+
         // Beaconの利用権限確認
         cordova.plugins.locationManager.requestAlwaysAuthorization();
 
+          $scope.toList = function() {
+              $scope.navi.pushPage('page/list.html', {
+                   animation: 'slide'
+               });
+          };
+                      
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
         var result2 = hikiyamaService.getList();
@@ -117,9 +124,7 @@
         });
     });
 
-
-    module.controller('ListController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
-
+    module.controller('PopListController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
         $scope.items = hikiyamaService.popList;
 
         $scope.$on('hikiyama:changeList', function(data) {
@@ -132,6 +137,44 @@
             });
         };
     });
+
+
+    module.controller('ListController', function($scope, $http, SERVER_URL, beaconService, store) {
+        $scope.items = store.get('hikiyamas');
+
+        $scope.$on('hikiyama:changeList', function(data) {
+            $scope.items = hikiyamaService.popList;
+        });
+
+        $scope.toDetail = function() {
+            $scope.navi.pushPage('page/detail.html', {
+                animation: 'slide'
+            });
+        };
+    });
+ 
+    module.controller('DetailController', function($scope, $http, SERVER_URL, beaconService, store) {
+                   
+       $scope.items = store.get('hikiyamas');
+       
+                      $('.bxslider').bxSlider({
+                          mode: 'horizontal',
+                          controls: false,
+                          captions: false
+                      });
+                      
+                      
+                      
+                      
+                      $('.accordionMod').accordion({
+                           classHead:'.title',
+                           classBody:'.in',
+                           classToggle:'on'
+                       });
+                      
+
+      
+   });
 
     /**
      * Beacon情報関連のService
