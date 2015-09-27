@@ -313,9 +313,10 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
 
       text-decoration: none;
       color: #333;
+      overflow: hidden;
 
     }
-    .stampListMod .list li:nth-child(2n+1) {
+    .stampListMod .ls li:nth-child(2n+1) {
       clear: left;
     }
     .stampListMod .ls li .img {
