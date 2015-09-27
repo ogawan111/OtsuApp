@@ -31,7 +31,11 @@
             var delegate = new cordova.plugins.locationManager.Delegate();
 
             delegate.didDetermineStateForRegion = function(pluginResult) {
-                //navigator.notification.alert('didDetermineStateForRegion:' + JSON.stringify(pluginResult));
+                // navigator.notification.alert('didDetermineStateForRegion:' + JSON.stringify(pluginResult), function() {
+                //     // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+                //     //     .fail(console.error)
+                //     //     .done();
+                // });
             };
 
             delegate.didStartMonitoringForRegion = function(pluginResult) {
@@ -40,8 +44,7 @@
 
             delegate.didRangeBeaconsInRegion = function(pluginResult) {
                 //console.log(JSON.stringify(pluginResult));
-cordova.plugins.locationManager.appendToDeviceLog('[DOM] didRangeBeaconsInRegion: '
-        + JSON.stringify(pluginResult));
+                //cordova.plugins.locationManager.appendToDeviceLog('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
             };
 
             delegate.didEnterRegion = function(pluginResult) {
@@ -174,20 +177,20 @@ cordova.plugins.locationManager.appendToDeviceLog('[DOM] didRangeBeaconsInRegion
             removeItem: function(identifier) {
                 var hikiyamaList = store.get('hikiyamas');
 
-                for(var i=0; i< hikiyamaList.length; i++) {
+                for (var i = 0; i < hikiyamaList.length; i++) {
                     var hikiyama = hikiyamaList[i];
-                    if(hikiyama.identifier == identifier) {
+                    if (hikiyama.identifier == identifier) {
                         hikiyamaList.splice(i, 1);
                         store.set('hikiyamas', hikiyamaList);
 
-                        if(hikiyamaList.length === 0) {
+                        if (hikiyamaList.length === 0) {
                             $rootScope.listDialog.hide();
                             $rootScope.listDialog = null;
                         }
                         break;
                     }
                 }
-                $timeout(function(){
+                $timeout(function() {
                     $rootScope.$broadcast('hikiyama:changeList', store.get('hikiyamas'));
                 }, 500);
             }
