@@ -313,9 +313,10 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
 
       text-decoration: none;
       color: #333;
+      overflow: hidden;
 
     }
-    .stampListMod .list li:nth-child(2n+1) {
+    .stampListMod .ls li:nth-child(2n+1) {
       clear: left;
     }
     .stampListMod .ls li .img {
@@ -373,3 +374,24 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
       display: block;
       
     }
+
+
+.imgCom {
+    margin-top: 10px;
+    
+
+    text-align: center;
+    
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 5px solid #fff;
+    -moz-box-shadow: 0px 0px 3px #000000;
+    -webkit-box-shadow: 0px 0px 3px #000000;
+    box-shadow: 0px 0px 3px #000000;
+    /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+
+}
+.imgCom img {
+    max-width: 100%;
+    height: auto;
+}
