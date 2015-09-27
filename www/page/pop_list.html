@@ -10,15 +10,15 @@
                 <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items">
                     <ons-row ng-click="toDetail()">
                         <ons-col class="col1">
-                            <img ng-src="{{item.imageURL.src}}" height="130" width="130" class="thumbnail">
+                            <img ng-src="{{item.hikiyama.imageURL.src}}" height="130" width="130" class="thumbnail">
                         </ons-col>
                         <ons-col class="col2">
-                            <div class="name" ng-bind="item.title">
+                            <div class="name" ng-bind="item.hikiyama.title">
                             </div>
-                            <div class="yomi" ng-bind="item.furigana">
+                            <div class="yomi" ng-bind="item.hikiyama.furigana">
                             </div>
-                            <div class="kyori">
-                                曳山までの距離：10m
+                            <div class="kyori" >
+                                曳山までの距離：{{item.hikiyama.accu}}
                             </div>
                         </ons-col>
                         <ons-col width="20px"></ons-col>

@@ -57,7 +57,10 @@ body {
 	z-index: 1;
 }
 
-
+ons-page {
+    position:absolute;
+    z-index:2;
+}
 
 .page, .page__background {
 	background-color: transparent !important;
@@ -199,8 +202,6 @@ body {
 }
 #wrapper {
 	padding-bottom: 10px;
-    position:absolute;
-    z-index:2;
 }
 
 h2.headCom

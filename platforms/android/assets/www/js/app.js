@@ -31,11 +31,11 @@
             var delegate = new cordova.plugins.locationManager.Delegate();
 
             delegate.didDetermineStateForRegion = function(pluginResult) {
-                // navigator.notification.alert('didDetermineStateForRegion:' + JSON.stringify(pluginResult), function() {
-                //     // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-                //     //     .fail(console.error)
-                //     //     .done();
-                // });
+                navigator.notification.alert('didDetermineStateForRegion:' + JSON.stringify(pluginResult), function() {
+                    // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+                    //     .fail(console.error)
+                    //     .done();
+                });
             };
 
             delegate.didStartMonitoringForRegion = function(pluginResult) {
@@ -45,6 +45,11 @@
             delegate.didRangeBeaconsInRegion = function(pluginResult) {
                 //console.log(JSON.stringify(pluginResult));
                 //cordova.plugins.locationManager.appendToDeviceLog('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                navigator.notification.alert('didRangeBeaconsInRegion:' + JSON.stringify(pluginResult), function() {
+                    // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+                    //     .fail(console.error)
+                    //     .done();
+                });
             };
 
             delegate.didEnterRegion = function(pluginResult) {
