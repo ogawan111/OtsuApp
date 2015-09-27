@@ -6,9 +6,9 @@
                     <img src="img/searchlist_mod_find.png" height="41" width="515" alt="">
                 </div>
             </ons-toolbar>
-            <ons-list ng-controller="ListController">
+            <ons-list ng-controller="PopListController">
                 <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items">
-                    <ons-row ng-click="toDetail()">
+                    <ons-row ng-click="toDetail(item.hikiyama.beaconPathAlias)">
                         <ons-col class="col1">
                             <img ng-src="{{item.hikiyama.imageURL.src}}" height="130" width="130" class="thumbnail">
                         </ons-col>

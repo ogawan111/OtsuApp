@@ -1,6 +1,42 @@
-<ons-page>
-    <ons-toolbar>
-      <div class="left"><ons-back-button ng-click="navi.popPage();">Back</ons-back-button></div>
-      <div class="center">Title</div>
+<ons-page class="paperBgCom">
+    <div ng-controller="DetailController">
+        
+    
+    <ons-toolbar class="redNavBarCom">
+      <div class="left"><ons-back-button ng-click="navi.popPage();">戻る</ons-back-button></div>
+      <div class="center">曳山詳細</div>
     </ons-toolbar>
+        
+        <script src="bower_components/design/sp_detail.js"></script>
+    <h2 class="headCom" ng-bind="item.title"></h2>
+    <ul class="bxslider">
+        <li><img src="img/detailpic_pic1.jpg" height="388" width="580" title="" /></li>
+        <li><img src="img/detailpic_pic1.jpg" height="388" width="580" title="" /></li>
+        <li><img src="img/detailpic_pic1.jpg" height="388" width="580" title="" /></li>
+    </ul>
+    
+    
+    <h2 class="headCom" ng-bind="item.imageURL.src">曳山の説明</h2>
+    
+
+<iframe width="100%" height="315" ng-src="{{image.movieURL}}" frameborder="0" allowfullscreen></iframe>
+
+
+<div class="wysiwygCom">
+    <p ng-bind="item.hikiyamaDiscription"></p>
+</div>
+
+
+<section class="accordionMod">
+    <h2 class="title">その他</h2>
+    <div class="in">
+        <div class="wysiwygCom">
+            <p ng-bind="item.sonota"></p>
+        </div>
+    </div>
+    
+</section>
+
+</div>
+
 </ons-page>
