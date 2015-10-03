@@ -9,10 +9,12 @@
         <secton class="stampListMod">
             <ul class="ls">
                 <li ng-repeat="item in items" ng-click="toDetail(item.hikiyama.beaconPathAlias)">
+                    <span class="bg">
                     <span class="img"><span class="imgIn"><img src="{{item.hikiyama.imageURL[0].src}}" height="210" width="290" alt=""></span></span><span class="txt stampOn">
             <span class="name">{{item.hikiyama.title}}</span>
             <span class="yomi">({{item.hikiyama.furigana}})</span>
         </span>
+                 </span>
                 </li>
             </ul>
         </secton>
