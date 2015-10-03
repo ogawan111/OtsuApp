@@ -344,6 +344,7 @@ iframe {
     display: block;
     padding: 10px;
     background-image: url(../img/stamplist_mod_stamp_off.png);
+    background-size: 31px 34px;
     padding-left: 50px;
     background-repeat: no-repeat;
     background-position: 10px 10px;
