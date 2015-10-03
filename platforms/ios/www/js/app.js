@@ -210,6 +210,7 @@
         $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
             $('.bxslider').bxSlider({
                 mode: 'horizontal',
+                adaptiveHeight: true,
                 controls: false,
                 captions: false
             });
