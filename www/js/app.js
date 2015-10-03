@@ -18,6 +18,11 @@
         navigator.notification.alert(txt, function() {});
     }
 
+    function is(type, obj) {
+        var clas = Object.prototype.toString.call(obj).slice(8, -1);
+        return obj !== undefined && obj !== null && clas === type;
+    }
+
     module.run(function($rootScope) {
         // 2度押し対応
         $rootScope.clickExec = false;
@@ -177,8 +182,16 @@
 
     module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, beaconService, hikiyamaService, store) {
         $scope.item = hikiyamaService.detailObj;
-        $scope.existImage =
-            ($scope.item.imageURL.src !== void 0 && $scope.item.imageURL.src !== '');
+        $scope.imageList = [];
+
+        // 画像が一つの場合、Objectとなる
+        if ($scope.item.imageURL !== void 0 && $scope.item.imageURL !== null) {
+            if (is('Object', $scope.item.imageURL)) {
+                $scope.imageList.push($scope.item.imageURL);
+            } else if (is('Array', $scope.item.imageURL)) {
+                $scope.imageList = $scope.item.imageURL;
+            }
+        }
 
         $scope.trustURL = function(src) {
             return $sce.trustAsResourceUrl(src);
@@ -186,15 +199,22 @@
 
         $scope.$on('hikiyama:changeDetail', function(data) {
             $scope.item = hikiyamaService.detailObj;
-            $scope.existImage =
-                ($scope.item.imageURL.src !== void 0 && $scope.item.imageURL.src !== '');
+
+            // 画像が一つの場合、Objectとなる
+            if ($scope.item.imageURL !== void 0 && $scope.item.imageURL !== null) {
+                if (is('Object', $scope.item.imageURL)) {
+                    $scope.imageList.push($scope.item.imageURL);
+                } else if (is('Array', $scope.item.imageURL)) {
+                    $scope.imageList = $scope.item.imageURL;
+                }
+            }
         });
 
-        // $('.bxslider').bxSlider({
-        //     mode: 'horizontal',
-        //     controls: false,
-        //     captions: false
-        // });
+        $('.bxslider').bxSlider({
+            mode: 'horizontal',
+            controls: false,
+            captions: false
+        });
 
         $('.accordionMod').accordion({
             classHead: '.title',

@@ -384,14 +384,3 @@ iframe {
 .bx-wrapper {
     margin: 0 auto 30px;
 }
-
-ul.bxslider {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-ul.bxslider img {
-  max-width: 100%;
-  height: auto;
-}
