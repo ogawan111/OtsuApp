@@ -9,7 +9,7 @@
         <script src="bower_components/design/sp_detail.js"></script>
         <h2 class="headCom" ng-bind="item.title"></h2>
         <ul class="bxslider">
-            <li ng-repeat="img in imageList"><img src="{{img.src}}" alt="{{img.alt}}" height="388" width="580" title="" /></li>
+            <li ng-repeat="img in imageList" bxslider-directive><img src="{{img.src}}" alt="{{img.alt}}" height="388" width="580" title="" /></li>
         </ul>
         <h2 class="headCom">曳山の説明</h2>
         <iframe width="100%" height="315" src="{{trustURL(item.movieURL)}}" frameborder="0" allowfullscreen></iframe>
