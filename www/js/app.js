@@ -1,8 +1,8 @@
 (function() {
     'use strict';
-    var module = angular.module('app', ['onsen', 'angular-storage']);
+    var module = angular.module('app', ['onsen', 'angular-storage', 'ngSanitize']);
     module.constant('APP_VERSION', '1.0.0');
-    module.constant('APP_NAME', '大津市祭り');
+    module.constant('APP_NAME', '大津祭りストーリーテラー');
     module.constant('SERVER_URL', 'http://ec2-52-24-104-59.us-west-2.compute.amazonaws.com/drupal/');
 
     document.addEventListener('deviceready', function() {
@@ -17,14 +17,22 @@
         }
         navigator.notification.alert(txt, function() {});
     }
+
+    module.run(function($rootScope) {
+        // 2度押し対応
+        $rootScope.clickExec = false;
+    });
+
+
     /**
      * TOPページのコントローラ
      */
-    module.controller('AppController', function($scope, $rootScope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
+    module.controller('AppController', function($scope, $rootScope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
 
         // Beaconの利用権限確認
         cordova.plugins.locationManager.requestAlwaysAuthorization();
 
+        // 一覧ページへ遷移
         $scope.toList = function() {
             $scope.navi.pushPage('page/list.html', {
                 animation: 'slide'
@@ -45,6 +53,7 @@
 
                     var bObj = pluginResult.region;
                     var state = pluginResult.state;
+                    // ビーコンオブジェクト作成
                     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(bObj.identifier, bObj.uuid, bObj.major, bObj.minor);
 
                     if (beaconService.states.in === state) {
@@ -138,54 +147,60 @@
                 $scope.navi.pushPage('page/detail.html', {
                     animation: 'slide'
                 });
-            }, function(){
+            }, function() {
                 navigator.notification.alert('詳細の取得に失敗しました');
             });
         };
     });
 
-
-    module.controller('ListController', function($scope, $http, SERVER_URL, beaconService, store) {
+    /**
+     * 一覧表示
+     */
+    module.controller('ListController', function($scope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
         $scope.items = store.get('hikiyamas');
 
         $scope.$on('hikiyama:changeList', function(data) {
             $scope.items = hikiyamaService.popList;
         });
 
-        $scope.toDetail = function() {
-            $scope.navi.pushPage('page/detail.html', {
-                animation: 'slide'
+        $scope.toDetail = function(pathAlias) {
+            var result = hikiyamaService.getDetail(pathAlias);
+            result.then(function() {
+                $scope.navi.pushPage('page/detail.html', {
+                    animation: 'slide'
+                });
+            }, function() {
+                navigator.notification.alert('詳細の取得に失敗しました');
             });
         };
     });
 
-    module.controller('DetailController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
-
+    module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, beaconService, hikiyamaService, store) {
         $scope.item = hikiyamaService.detailObj;
+        $scope.existImage =
+            ($scope.item.imageURL.src !== void 0 && $scope.item.imageURL.src !== '');
 
-        console.log(JSON.stringify($scope.item));
+        $scope.trustURL = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        };
 
         $scope.$on('hikiyama:changeDetail', function(data) {
             $scope.item = hikiyamaService.detailObj;
+            $scope.existImage =
+                ($scope.item.imageURL.src !== void 0 && $scope.item.imageURL.src !== '');
         });
 
-        $('.bxslider').bxSlider({
-            mode: 'horizontal',
-            controls: false,
-            captions: false
-        });
-
-
-
+        // $('.bxslider').bxSlider({
+        //     mode: 'horizontal',
+        //     controls: false,
+        //     captions: false
+        // });
 
         $('.accordionMod').accordion({
             classHead: '.title',
             classBody: '.in',
             classToggle: 'on'
         });
-
-
-
     });
 
     /**
@@ -254,7 +269,7 @@
 
     module.factory('hikiyamaService', function($http, $q, $rootScope, $timeout, store, SERVER_URL) {
         var service = {
-            detailObj:  null,
+            detailObj: null,
             // 近くの曳山用変数
             popList: [],
             getList: function() {
@@ -286,7 +301,7 @@
                         break;
                     }
                 }
-                if(hit == false) {
+                if (hit == false) {
                     defer.reject('error');
                 }
                 return defer.promise;
@@ -364,12 +379,6 @@
             }
 
         };
-        return service;
-    });
-
-    module.factory('beaconMasterService', function() {
-        var service = {};
-
         return service;
     });
 })();

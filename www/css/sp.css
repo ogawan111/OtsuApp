@@ -1,107 +1,109 @@
 @charset "UTF-8";
-
-
-
 body {
-	font-size:12px;
-	color: #333333;
-	font-family: 'Helvetica', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', 'Osaka', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    font-size: 12px;
+    color: #333333;
+    font-family: 'Helvetica', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', 'Osaka', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 }
 
 .serifCom {
-	font-family: "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "游明朝", "Yu Mincho", "HG明朝B","ＭＳ Ｐ明朝","ＭＳ 明朝" , serif;
+    font-family: "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "游明朝", "Yu Mincho", "HG明朝B", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
 }
-
-
 
 .firstTopCom {
-	margin-top:0px !important;
+    margin-top: 0px !important;
 }
+
 .firstLeftCom {
-	margin-left:0px !important;
+    margin-left: 0px !important;
 }
-
-
-
 
 #appLogo {
-	text-align: center;
-	margin-top: 11%;
+    text-align: center;
+    margin-top: 11%;
 }
-#appLogo img {
-	width: 70%;
-	height: auto;
-}
-#hikiyamaSearch {
-	margin-left: auto;
-	margin-right: auto;
-	width: 40%;
-	margin-top: 14%;
-	position: relative;
 
+#appLogo img {
+    width: 70%;
+    height: auto;
 }
+
+#hikiyamaSearch {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 14%;
+    position: relative;
+}
+
 #hikiyamaSearch .bg img {
-	position: relative;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: auto;
-	z-index: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
 }
+
 #hikiyamaSearch .anime img {
-	position: absolute;
-	top: 11%;
-	left: 20.5%;
-	width: 58.3%;
-	height: auto;
-	z-index: 1;
+    position: absolute;
+    top: 11%;
+    left: 20.5%;
+    width: 58.3%;
+    height: auto;
+    z-index: 1;
 }
 
 ons-page {
-    position:absolute;
-    z-index:2;
+    position: absolute;
+    z-index: 2;
 }
 
-.page, .page__background {
-	background-color: transparent !important;
+.page,
+.page__background {
+    background-color: transparent !important;
 }
-
 
 body {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
+
 .fadeBgMod {
-	height: 100%;
-	width: 100%;
-	position: fixed;
-	left: 0;
-	top: 0;
-
-	overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow: hidden;
 }
+
 .fadeBgMod img {
-	height: 100%;
-	width: auto;
+    height: 100%;
+    width: auto;
 }
-.fadeBgMod li {
-	display: none;
-	position: absolute;
-		height: 100%;
-	width: 100%;
-	text-align: center;
 
+.fadeBgMod li {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
+
 
 /*背景*/
+
 body {
     background: url(../img/wrapper_bg.jpg) !important;
 }
+
 .paperBgCom {
     background: url(../img/wrapper_bg.jpg) !important;
 }
 
+
 /*ナビゲーションバー*/
+
 .imgNavBarCom.navigation-bar {
     height: auto !important;
 }
@@ -112,276 +114,259 @@ body {
     float: none !important;
     line-height: normal !important;
 }
+
 .imgNavBarCom.navigation-bar .navigation-bar__title img {
     width: 100%;
     height: auto;
 }
+
 .redNavBarCom.navigation-bar {
     background-color: #820000 !important;
     border-bottom: 1px solid #470000 !important;
 }
 
-.redNavBarCom.navigation-bar .navigation-bar__title, .redNavBarCom.navigation-bar .toolbar-button--quiet {
+.redNavBarCom.navigation-bar .navigation-bar__title,
+.redNavBarCom.navigation-bar .toolbar-button--quiet {
     color: #fff !important;
 }
 
 
 /*daialog*/
-.dialog  {
-	width: 94% !important;
-	height: 94% !important;
-	background-color: #fff !important;
+
+.dialog {
+    width: 94% !important;
+    height: 94% !important;
+    background-color: #fff !important;
 }
 
 .searchListMod .list__item {
-	line-height: 140% !important;
-	padding: 15px !important;
+    line-height: 140% !important;
+    padding: 15px !important;
 }
 
 .searchListMod .col1 {
-	  -webkit-box-flex: 0.4;
-  -webkit-flex: 0.4;
-  -moz-flex: 0.4;
-  -ms-flex: 0.4;
-}
-.searchListMod .col1 img {
-	width: 100%;
-	height: auto;
+    -webkit-box-flex: 0.4;
+    -webkit-flex: 0.4;
+    -moz-flex: 0.4;
+    -ms-flex: 0.4;
 }
 
+.searchListMod .col1 img {
+    width: 100%;
+    height: auto;
+}
 
 .searchListMod .col2 {
-	  -webkit-box-flex: 1.0;
-  -webkit-flex: 1.0;
-  -moz-flex: 1.0;
-  -ms-flex: 1.0;
-  padding-left: 10px;
+    -webkit-box-flex: 1.0;
+    -webkit-flex: 1.0;
+    -moz-flex: 1.0;
+    -ms-flex: 1.0;
+    padding-left: 10px;
 }
+
 .searchListMod .name {
-	font-weight: bold;
-	font-size: 20px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .searchListMod .yomi {
-	font-size: 12px;
+    font-size: 12px;
 }
+
 .searchListMod .kyori {
-	font-size: 16px;
-	color: #880000;
-	margin-top: 15px;
+    font-size: 16px;
+    color: #880000;
+    margin-top: 15px;
 }
-
-
-
-
 
 .bx-wrapper {
-	padding: 10px !important;
-	margin-top: 10px !important;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+    padding: 10px !important;
+    margin-top: 10px !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 .bx-wrapper .bx-viewport {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	/*display: none !important;*/
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*display: none !important;*/
 }
-.bx-controls {
-/*謎の隙間対策*/
-	width: 90%;
-	left: 5%;
-	position: relative;
-	
 
+.bx-controls {
+    /*謎の隙間対策*/
+    width: 90%;
+    left: 5%;
+    position: relative;
 }
 
 .bx-wrapper img {
-	height: auto !important;
-	width: 100% !important;
+    height: auto !important;
+    width: 100% !important;
 }
-
-
 
 #wrapper {
-	padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
-h2.headCom
-,.accordionMod .title {
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-	background-color: #e4decf;
-	color: #2b0303 !important;
-
-	border: double medium #d3c6ae;
-	font-size: 17px;
-	padding: 5px;
-}
+h2.headCom,
 .accordionMod .title {
-	background-image: url(../img/accordion_mod_plus.png);
-	padding-left: 40px;
-	background-repeat: no-repeat;
-	
-	background-position: 5px center;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #e4decf;
+    color: #2b0303 !important;
+    border: double medium #d3c6ae;
+    font-size: 17px;
+    padding: 5px;
 }
+
+.accordionMod .title {
+    background-image: url(../img/accordion_mod_plus.png);
+    padding-left: 40px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+}
+
 .accordionMod .title.on {
-	background-image: url(../img/accordion_mod_minus.png);
+    background-image: url(../img/accordion_mod_minus.png);
 }
 
 iframe {
-	margin-top: 20px;
-	padding-left: 10px;
-	padding-right: 10px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
-
 
 #hikiyamaListBtn {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
+
 #hikiyamaListBtn .btn {
-	display: block;
-	padding: 15px;
-	text-align: center;
-	background-color: rgba(255,255,255,0.9);
-
-
--moz-box-shadow: 0px -1px 1px #aaaaaa;
--webkit-box-shadow: 0px -1px 1px #aaaaaa;
-box-shadow: 0px -1px 1px #aaaaaa;
-filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, color = '#aaaaaa');
--ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 0, Direction = 0, Color = '#aaaaaa')";
-/*Shadows look very different in IE (Only cardinal directions supported)*/
-/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
-/*Element should have a background-color*/
-/*All filters must be placed together*/
-/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
-
-	
+    display: block;
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    -moz-box-shadow: 0px -1px 1px #aaaaaa;
+    -webkit-box-shadow: 0px -1px 1px #aaaaaa;
+    box-shadow: 0px -1px 1px #aaaaaa;
+    filter: progid: DXImageTransform.Microsoft.Shadow(strength=0, direction=0, color='#aaaaaa');
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 0, Direction = 0, Color = '#aaaaaa')";
+    /*Shadows look very different in IE (Only cardinal directions supported)*/
+    /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+    /*Element should have a background-color*/
+    /*All filters must be placed together*/
+    /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
 }
+
 #hikiyamaListBtn .btn img {
-	width: 50%;
-	height: auto;
+    width: 50%;
+    height: auto;
 }
 
-    .stampListMod .ls {
-      overflow: hidden;
-      width: 100%;
-      padding-right: 10px;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      padding-bottom: 10px;
-      
-    }
-    .stampListMod .ls li {
-      margin-top: 10px;
-      width: 50%;
+.stampListMod .ls {
+    overflow: hidden;
+    width: 100%;
+    padding-right: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
 
-      vertical-align: top;
-      padding-left: 10px;
-      
-      float: left;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
+.stampListMod .ls li {
+    margin-top: 10px;
+    width: 50%;
+    vertical-align: top;
+    padding-left: 10px;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
-    }
-    .stampListMod .ls li a {
-      display: block;
-      background-color: #fff;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      width: 100%;
-      border-radius: 5px;
+.stampListMod .ls li a {
+    display: block;
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 5px;
+    -moz-box-shadow: 0px 0px 2px #999;
+    -webkit-box-shadow: 0px 0px 2px #999;
+    box-shadow: 0px 0px 2px #999;
+    /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+    text-decoration: none;
+    color: #333;
+    overflow: hidden;
+}
 
-      -moz-box-shadow: 0px 0px 2px #999;
-      -webkit-box-shadow: 0px 0px 2px #999;
-      box-shadow: 0px 0px 2px #999;
-      /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+.stampListMod .ls li:nth-child(2n+1) {
+    clear: left;
+}
 
-      text-decoration: none;
-      color: #333;
-      overflow: hidden;
+.stampListMod .ls li .img {
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
 
-    }
-    .stampListMod .ls li:nth-child(2n+1) {
-      clear: left;
-    }
-    .stampListMod .ls li .img {
-      position: relative;
-      display: block;
-      overflow: hidden;
-      
-    }
-    .stampListMod .ls li .img:after {
-      padding-top: 75%;
-      display: block;
-      content: "";
-    }
-    .stampListMod .ls li .imgIn {
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          bottom: 0px;
-          right: 0px;
-          display: block;
-          text-align: center;
-          
-          
-    }
-    .stampListMod .ls li .img img {
-      height: 100%;
-      width: auto;
+.stampListMod .ls li .img:after {
+    padding-top: 75%;
+    display: block;
+    content: "";
+}
 
-      
-    }
-    .stampListMod .ls li .txt {
-      display: block;
-      
-      padding: 10px;
+.stampListMod .ls li .imgIn {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    display: block;
+    text-align: center;
+}
 
-      background-image: url(../img/stamplist_mod_stamp_off.png);
-      padding-left: 50px;
-      background-repeat: no-repeat;
-      background-position: 10px 10px;
-      line-height: 18px;
+.stampListMod .ls li .img img {
+    height: 100%;
+    width: auto;
+}
 
-    }
-    .stampListMod .ls li .stampOn {
-      background-image: url(../img/stamplist_mod_stamp_on.png);
+.stampListMod .ls li .txt {
+    display: block;
+    padding: 10px;
+    background-image: url(../img/stamplist_mod_stamp_off.png);
+    padding-left: 50px;
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    line-height: 18px;
+}
 
-    
-    }
-    .stampListMod .ls li .name {
-      font-size: 16px;
-      display: block;
-      
-    }
-    .stampListMod .ls li .yomi {
-      font-size: 12px;
-      display: block;
-      
-    }
+.stampListMod .ls li .stampOn {
+    background-image: url(../img/stamplist_mod_stamp_on.png);
+}
 
+.stampListMod .ls li .name {
+    font-size: 16px;
+    display: block;
+}
+
+.stampListMod .ls li .yomi {
+    font-size: 12px;
+    display: block;
+}
 
 .imgCom {
     margin-top: 10px;
-    
-
     text-align: center;
-    
     margin-left: 10px;
     margin-right: 10px;
     border: 5px solid #fff;
@@ -389,9 +374,24 @@ filter: progid:DXImageTransform.Microsoft.Shadow(strength = 0, direction = 0, co
     -webkit-box-shadow: 0px 0px 3px #000000;
     box-shadow: 0px 0px 3px #000000;
     /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
-
 }
+
 .imgCom img {
     max-width: 100%;
     height: auto;
+}
+
+.bx-wrapper {
+    margin: 0 auto 30px;
+}
+
+ul.bxslider {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+ul.bxslider img {
+  max-width: 100%;
+  height: auto;
 }
