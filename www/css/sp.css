@@ -292,7 +292,7 @@ iframe {
     box-sizing: border-box;
 }
 
-.stampListMod .ls li a {
+.stampListMod .ls li .bg {
     display: block;
     background-color: #fff;
     -webkit-box-sizing: border-box;
@@ -384,3 +384,8 @@ iframe {
 .bx-wrapper {
     margin: 0 auto 30px;
 }
+/*詳細画面で少しコンテンツ末端に余裕を持たせる*/
+#hikiyamaDetail .page__content {
+    padding-bottom:10px;
+}
+
