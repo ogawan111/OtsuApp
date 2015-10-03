@@ -174,9 +174,9 @@ body {
 }
 
 .searchListMod .kyori {
-    font-size: 16px;
+    font-size: 14px;
     color: #880000;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .bx-wrapper {
@@ -292,7 +292,7 @@ iframe {
     box-sizing: border-box;
 }
 
-.stampListMod .ls li a {
+.stampListMod .ls li .bg {
     display: block;
     background-color: #fff;
     -webkit-box-sizing: border-box;
@@ -344,6 +344,7 @@ iframe {
     display: block;
     padding: 10px;
     background-image: url(../img/stamplist_mod_stamp_off.png);
+    background-size: 31px 34px;
     padding-left: 50px;
     background-repeat: no-repeat;
     background-position: 10px 10px;
@@ -384,3 +385,8 @@ iframe {
 .bx-wrapper {
     margin: 0 auto 30px;
 }
+/*詳細画面で少しコンテンツ末端に余裕を持たせる*/
+#hikiyamaDetail .page__content {
+    padding-bottom:10px;
+}
+

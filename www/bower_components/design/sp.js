@@ -69,6 +69,12 @@ $.fn.accordion = function(config) {
                     bodyJ.slideToggle("normal",function(){
                                       if(bodyJ.is(':visible')) {
                                       headJ.addClass(config.classToggle);
+                                      
+                                      // アコーディオンを開くとき開いたことがわかるように少しスクロールさせる
+                                      $('#hikiyamaDetail .page__content').animate({
+                                                                                  scrollTop: $('#hikiyamaDetail .page__content').scrollTop()+100
+                                                                                  }, 500);
+                                      
                                       } else {
                                       headJ.removeClass(config.classToggle);
                                       }

@@ -5,6 +5,17 @@
     module.constant('APP_NAME', '大津祭りストーリーテラー');
     module.constant('SERVER_URL', 'http://ec2-52-24-104-59.us-west-2.compute.amazonaws.com/drupal/');
 
+    // ng-repeat完了を監視
+    module.directive('bxsliderDirective', function($timeout){
+        return function(scope, element, attrs){
+            if (scope.$last){
+                $timeout(function(){
+                    scope.$emit("ngRepeatFinished"); //イベント
+                });
+            }
+        }
+    });
+ 
     document.addEventListener('deviceready', function() {
         localStorage.clear();
         angular.bootstrap(document, ['app']);
@@ -210,11 +221,14 @@
             }
         });
 
-        $('.bxslider').bxSlider({
-            mode: 'horizontal',
-            controls: false,
-            captions: false
+        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+            $('.bxslider').bxSlider({
+                mode: 'horizontal',
+                controls: false,
+                captions: false
+            });
         });
+ 
 
         $('.accordionMod').accordion({
             classHead: '.title',
