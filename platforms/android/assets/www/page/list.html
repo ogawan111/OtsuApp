@@ -1,8 +1,22 @@
-<ons-page>
-	<div ng-controller="ListController">
-		<ons-list>
-			<ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="showDetail($index)">
-			</ons-list-item>
-		</ons-list>
-	</div>
+<ons-page class="paperBgCom">
+    <div ng-controller="ListController">
+        <ons-toolbar class="redNavBarCom">
+            <div class="left">
+                <ons-back-button>戻る</ons-back-button>
+            </div>
+            <div class="center">曳山一覧</div>
+        </ons-toolbar>
+        <secton class="stampListMod">
+            <ul class="ls">
+                <li ng-repeat="item in items" ng-click="toDetail(item.hikiyama.beaconPathAlias)">
+                    <span class="bg">
+                    <span class="img"><span class="imgIn"><img src="{{item.hikiyama.imageURL[0].src}}" height="210" width="290" alt=""></span></span><span class="txt stampOn">
+            <span class="name">{{item.hikiyama.title}}</span>
+            <span class="yomi">({{item.hikiyama.furigana}})</span>
+        </span>
+                 </span>
+                </li>
+            </ul>
+        </secton>
+    </div>
 </ons-page>

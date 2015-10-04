@@ -1,24 +1,24 @@
 <ons-dialog var="dialog" class="searchListMod" cancelable>
-    <ons-navigator var="navi">
-        <ons-page>
-            <ons-toolbar inline>
+    <ons-navigator var="popNavi">
+        <ons-page ng-controller="PopListController">
+            <ons-toolbar inline class="imgNavBarCom">
                 <div class="center">
                     <img src="img/searchlist_mod_find.png" height="41" width="515" alt="">
                 </div>
             </ons-toolbar>
-            <ons-list ng-controller="ListController">
-                <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items">
-                    <ons-row ng-click="toDetail()">
+            <ons-list>
+                <ons-list-item modifier="chevron" class="list-item-container" ng-repeat="item in items" ng-click="toDetail(item.hikiyama.beaconPathAlias)">
+                    <ons-row>
                         <ons-col class="col1">
-                            <img ng-src="{{item.imageURL.src}}" height="130" width="130" class="thumbnail">
+                            <img ng-src="{{item.hikiyama.imageURL[0].src}}" height="130" width="130" class="thumbnail">
                         </ons-col>
                         <ons-col class="col2">
-                            <div class="name" ng-bind="item.title">
+                            <div class="name" ng-bind="item.hikiyama.title">
                             </div>
-                            <div class="yomi" ng-bind="item.furigana">
+                            <div class="yomi" ng-bind="item.hikiyama.furigana">
                             </div>
-                            <div class="kyori">
-                                曳山までの距離：10m
+                            <div class="kyori" >
+                                曳山までの距離：{{item.hikiyama.accu}}
                             </div>
                         </ons-col>
                         <ons-col width="20px"></ons-col>
