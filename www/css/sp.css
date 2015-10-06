@@ -204,6 +204,7 @@ body {
 .bx-wrapper img {
     height: auto !important;
     width: 100% !important;
+    min-height: 50px;
 }
 
 #wrapper {
