@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="altbeacon">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/altbeacon.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

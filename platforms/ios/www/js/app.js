@@ -13,7 +13,7 @@
                     scope.$emit("ngRepeatFinished"); //イベント
                 });
             }
-        }
+        };
     });
 
     document.addEventListener('deviceready', function() {
@@ -34,9 +34,19 @@
         return obj !== undefined && obj !== null && clas === type;
     }
 
-    module.run(function($rootScope) {
+    module.run(function($rootScope, APP_NAME) {
         // 2度押し対応
         $rootScope.clickExec = false;
+        // 
+        $rootScope.rbExec = false;
+        /**
+         * アラートダイアログ
+         */
+        $rootScope.alert = function(msg, callback){
+            navigator.notification.alert(msg, function(){
+                callback();
+            }, APP_NAME);
+        };
     });
 
 
@@ -55,6 +65,18 @@
             });
         };
 
+        // ダイアログを表示
+        $scope.showDialog = function() {
+            if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
+                ons.createDialog('page/pop_list.html').then(function(dialog) {
+                    $rootScope.listDialog = dialog;
+                    $rootScope.listDialog.show();
+                });
+            } else {
+                $rootScope.listDialog.show();
+            }
+        };
+
         // サーバからビーコン情報を取得
         var result = beaconService.getList();
         var result2 = hikiyamaService.getList();
@@ -66,54 +88,77 @@
                 var delegate = new cordova.plugins.locationManager.Delegate();
 
                 delegate.didDetermineStateForRegion = function(pluginResult) {
-
                     var bObj = pluginResult.region;
-                    var state = pluginResult.state;
                     // ビーコンオブジェクト作成
                     var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(bObj.identifier, bObj.uuid, bObj.major, bObj.minor);
 
-                    if (beaconService.states.in === state) {
-                        console.log('bObj.identifier : ' + bObj.identifier);
-                        //var result = hikiyamaService.setPopList(bObj.identifier);
+                    if (pluginResult.state === 'CLRegionStateInside') {
+                        // var result = hikiyamaService.setPopList(bObj.identifier);
 
                         // ビーコンが内部にいる状態なので、距離の測定を行う
                         cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-                            .fail(console.error)
+                            .fail()
                             .done();
                     } else {
                         cordova.plugins.locationManager.stopRangingBeaconsInRegion(beaconRegion)
-                            .fail(console.error)
+                            .fail()
                             .done();
                     }
                 };
-
-                delegate.didStartMonitoringForRegion = function(pluginResult) {
-                    //navigator.notification.alert('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
-                };
+                /**
+                 * モニタリング開始時の処理
+                 */
+                delegate.didStartMonitoringForRegion = function(pluginResult) {};
 
                 delegate.didRangeBeaconsInRegion = function(pluginResult) {
+
+                    if ($rootScope.rbExec) {
+                        return;
+                    } else {
+                        $rootScope.rbExec = true;
+                    }
+
                     var beacons = pluginResult.beacons;
 
                     if (beacons === void 0 || beacons.length === 0) {
+                        $rootScope.rbExec = false;
                         return;
                     }
 
                     angular.forEach(beacons, function(beacon, i) {
+                        if (beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate') {
+                            var result = hikiyamaService.setPopListForObj(beacon);
+
+                            result.then(function() {
+                                console.log('beacon.proximity : success');
+                                if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
+                                    ons.createDialog('page/pop_list.html').then(function(dialog) {
+                                        $rootScope.listDialog = dialog;
+                                        $rootScope.listDialog.show();
+                                    });
+                                }
+                            }, function() {
+                                console.log('beacon.proximity : error');
+                            });
+                        }
                         hikiyamaService.setAccuracy(beacon.uuid, beacon.major, beacon.minor, beacon.accuracy);
                     });
+                    $rootScope.rbExec = false;
                 };
-
-                delegate.didEnterRegion = function(pluginResult) {
-                    var beacon = pluginResult.region;
-                    var result = hikiyamaService.setPopList(beacon.identifier);
-                };
-
+                /**
+                 * ビーコンが検知範囲内に来た時の処理
+                 */
+                delegate.didEnterRegion = function(pluginResult) {};
+                /**
+                 * ビーコンが検知範囲外となった時の処理
+                 */
                 delegate.didExitRegion = function(pluginResult) {
                     var beacon = pluginResult.region;
                     hikiyamaService.removePopList(beacon.identifier);
                 };
 
                 cordova.plugins.locationManager.setDelegate(delegate);
+
                 var beaconList = store.get('beacons');
 
                 angular.forEach(beaconList, function(beacon, i) {
@@ -125,19 +170,19 @@
                         .done();
                 });
             });
-
-
-
         }, function(msg) {
             navigator.notification.alert(msg, function() {});
         });
     });
-
-    module.controller('PopListController', function($scope, $http, SERVER_URL, beaconService, hikiyamaService, store) {
+    
+    /**
+     * ビーコン検知時のダイアログ表示Ctrl
+     */
+    module.controller('PopListController', function($scope, hikiyamaService) {
         $scope.items = hikiyamaService.popList;
 
         $scope.$on('hikiyama:changePopList', function(data) {
-            $scope.items = hikiyamaService.popList;
+            $scope.items = data;
         });
 
         $scope.toDetail = function(pathAlias) {
@@ -149,7 +194,7 @@
                     animation: 'slide'
                 });
             }, function() {
-                navigator.notification.alert('詳細の取得に失敗しました');
+                navigator.notification.alert('詳細の取得に失敗しました', function(){});
             });
         };
     });
@@ -228,10 +273,6 @@
      */
     module.factory('beaconService', function($http, $q, $rootScope, $timeout, store, SERVER_URL) {
         var service = {
-            states: {
-                'in': 'CLRegionStateInside',
-                'out': 'CLRegionStateOutside'
-            },
             /**
              * サーバから一覧情報を取得
              */
@@ -294,37 +335,55 @@
                 }
                 return defer.promise;
             },
-            setPopList: function(identifier) {
+            /**
+             * 検知ダイアログ一覧を設定
+             */
+            setPopListForObj: function(param) {
                 var defer = $q.defer();
 
-                // 既に登録されていないか確認
-                for (var i = 0; i < service.popList.length; i++) {
-                    var obj = service.popList[i];
-                    if (obj.identifier === identifier) {
-                        defer.resolve('success');
-                        return defer.promise; // 既に設定されているためスルーする
-                    }
+                var beacons = store.get('beacons');
+                if (beacons === void 0 || beacons.length === 0) {
+                    defer.resolve('success');
+                    return defer.promise; // ビーコン情報の取得に失敗
                 }
 
-                // ストレージから該当の曳山を取得
-                var hikiyamaList = store.get('hikiyamas');
-                for (var i = 0; i < hikiyamaList.length; i++) {
-                    var hikiyama = hikiyamaList[i];
-                    if (hikiyama.hikiyama.beaconPathAlias === identifier) {
-                        hikiyama.hikiyama.accu = '接近中!!';
-                        service.popList.push(hikiyama); // 近くの曳山一覧に追加
-                        defer.resolve('success');
-                        $timeout(function() {
-                            $rootScope.$broadcast('hikiyama:changePopList', service.popList);
-                        }, 100);
+                // beaconのリストから一致するbeaconを取得
+                for (var x = 0; x < beacons.length; x++) {
+                    var bObj = beacons[x].beacon;
+                    if (bObj.UUID.toLowerCase() == param.uuid.toLowerCase() && bObj.Major == param.major && bObj.Minor == param.minor) {
 
-                        if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
-                            ons.createDialog('page/pop_list.html').then(function(dialog) {
-                                $rootScope.listDialog = dialog;
-                                $rootScope.listDialog.show();
-                            });
+                        // 既に登録されていないか確認
+                        for (var i = 0; i < service.popList.length; i++) {
+                            var obj = service.popList[i];
+
+                            if (obj.identifier === bObj.Identifier) {
+                                console.log('skip !!');
+                                defer.resolve('success');
+                                return defer.promise; // 既に設定されているためスルーする
+                            }
                         }
-                        break;
+
+                        // ストレージから該当の曳山を取得
+                        var hikiyamaList = store.get('hikiyamas');
+                        for (var i = 0; i < hikiyamaList.length; i++) {
+                            var hikiyama = hikiyamaList[i].hikiyama;
+
+                            if (hikiyama.beaconPathAlias === bObj.Identifier) {
+                                console.log('hikiyama.beaconPathAlias : ' + hikiyama.beaconPathAlias + ' , ' + hikiyama.beaconPathAlias);
+                                console.log('set *****');
+                                hikiyama.accu = '接近中!!';
+                                service.popList.push(hikiyama); // 近くの曳山一覧に追加
+                                $timeout(function() {
+                                    $rootScope.$broadcast('hikiyama:changePopList', service.popList);
+                                }, 100);
+                                defer.resolve('success');
+                                return defer.promise; // 既に設定されているためスルーする
+                            }
+                        }
+                        if (service.popList.length === 0) {
+                            defer.reject('error');
+                            return defer.promise;
+                        }
                     }
                 }
                 return defer.promise;
@@ -333,12 +392,11 @@
                 for (var i = 0; i < service.popList.length; i++) {
 
                     var hikiyama = service.popList[i];
-                    if (hikiyama.hikiyama.beaconPathAlias == identifier) {
+                    if (hikiyama.beaconPathAlias == identifier) {
                         service.popList.splice(i, 1);
 
                         if (service.popList.length === 0) {
                             $rootScope.listDialog.hide();
-                            $rootScope.listDialog = null;
                         }
                         break;
                     }
@@ -350,17 +408,17 @@
             setAccuracy: function(uuid, major, minor, accuracy) {
                 var beacons = store.get('beacons');
 
-                if (beacons === void 0 || beacons.length === 0 || service.popList === void 0 || service.popList === 0) {
+                if (beacons === void 0 || beacons.length === 0 || service.popList === void 0 || service.popList.length === 0) {
                     return;
                 }
-
+                console.log('setAccuracy:::');
                 angular.forEach(beacons, function(beacon, i) {
                     var bObj = beacon.beacon;
                     if (bObj.UUID.toLowerCase() == uuid.toLowerCase() && bObj.Major == major && bObj.Minor == minor) {
                         for (var j = 0; j < service.popList.length; j++) {
                             var hikiyama = service.popList[j];
-                            if (hikiyama.hikiyama.beaconPathAlias == bObj.Identifier) {
-                                hikiyama.hikiyama.accu = accuracy + ' m';
+                            if (hikiyama.beaconPathAlias == bObj.Identifier) {
+                                hikiyama.accu = accuracy + ' m';
                                 service.popList[j] = hikiyama;
 
                                 $timeout(function() {
