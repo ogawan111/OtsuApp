@@ -42,8 +42,8 @@
         /**
          * アラートダイアログ
          */
-        $rootScope.alert = function(msg, callback){
-            navigator.notification.alert(msg, function(){
+        $rootScope.alert = function(msg, callback) {
+            navigator.notification.alert(msg, function() {
                 callback();
             }, APP_NAME);
         };
@@ -99,6 +99,11 @@
                         cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
                             .fail()
                             .done();
+
+                        if (null !== $rootScope.listDialog && $rootScope.listDialog !== void 0
+                            && !$rootScope.listDialog.isShown()) {
+                            $rootScope.listDialog.show();
+                        }
                     } else {
                         cordova.plugins.locationManager.stopRangingBeaconsInRegion(beaconRegion)
                             .fail()
@@ -126,11 +131,10 @@
                     }
 
                     angular.forEach(beacons, function(beacon, i) {
-                        if (beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate') {
+                        if (beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate' || beacon.proximity === 'ProximityFar') {
                             var result = hikiyamaService.setPopListForObj(beacon);
 
                             result.then(function() {
-                                console.log('beacon.proximity : success');
                                 if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
                                     ons.createDialog('page/pop_list.html').then(function(dialog) {
                                         $rootScope.listDialog = dialog;
@@ -154,6 +158,8 @@
                  */
                 delegate.didExitRegion = function(pluginResult) {
                     var beacon = pluginResult.region;
+                    obj_dump(beacon);
+
                     hikiyamaService.removePopList(beacon.identifier);
                 };
 
@@ -174,7 +180,7 @@
             navigator.notification.alert(msg, function() {});
         });
     });
-    
+
     /**
      * ビーコン検知時のダイアログ表示Ctrl
      */
@@ -182,7 +188,7 @@
         $scope.items = hikiyamaService.popList;
 
         $scope.$on('hikiyama:changePopList', function(data) {
-            $scope.items = data;
+            $scope.items = hikiyamaService.popList;
         });
 
         $scope.toDetail = function(pathAlias) {
@@ -194,7 +200,7 @@
                     animation: 'slide'
                 });
             }, function() {
-                navigator.notification.alert('詳細の取得に失敗しました', function(){});
+                navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
     });
@@ -356,7 +362,7 @@
                         for (var i = 0; i < service.popList.length; i++) {
                             var obj = service.popList[i];
 
-                            if (obj.identifier === bObj.Identifier) {
+                            if (obj.hikiyama.beaconPathAlias === bObj.Identifier) {
                                 console.log('skip !!');
                                 defer.resolve('success');
                                 return defer.promise; // 既に設定されているためスルーする
@@ -366,12 +372,11 @@
                         // ストレージから該当の曳山を取得
                         var hikiyamaList = store.get('hikiyamas');
                         for (var i = 0; i < hikiyamaList.length; i++) {
-                            var hikiyama = hikiyamaList[i].hikiyama;
+                            var hikiyama = hikiyamaList[i];
 
-                            if (hikiyama.beaconPathAlias === bObj.Identifier) {
-                                console.log('hikiyama.beaconPathAlias : ' + hikiyama.beaconPathAlias + ' , ' + hikiyama.beaconPathAlias);
-                                console.log('set *****');
-                                hikiyama.accu = '接近中!!';
+                            if (hikiyama.hikiyama.beaconPathAlias === bObj.Identifier) {
+                                hikiyama.hikiyama.accu = '接近中!!';
+
                                 service.popList.push(hikiyama); // 近くの曳山一覧に追加
                                 $timeout(function() {
                                     $rootScope.$broadcast('hikiyama:changePopList', service.popList);
@@ -392,18 +397,18 @@
                 for (var i = 0; i < service.popList.length; i++) {
 
                     var hikiyama = service.popList[i];
-                    if (hikiyama.beaconPathAlias == identifier) {
+                    if (hikiyama.hikiyama.beaconPathAlias == identifier) {
                         service.popList.splice(i, 1);
 
                         if (service.popList.length === 0) {
                             $rootScope.listDialog.hide();
                         }
+                        $timeout(function() {
+                            $rootScope.$broadcast('hikiyama:changePopList', service.popList);
+                        }, 100);
                         break;
                     }
                 }
-                $timeout(function() {
-                    $rootScope.$broadcast('hikiyama:changePopList', service.popList);
-                }, 100);
             },
             setAccuracy: function(uuid, major, minor, accuracy) {
                 var beacons = store.get('beacons');
@@ -411,15 +416,21 @@
                 if (beacons === void 0 || beacons.length === 0 || service.popList === void 0 || service.popList.length === 0) {
                     return;
                 }
-                console.log('setAccuracy:::');
                 angular.forEach(beacons, function(beacon, i) {
                     var bObj = beacon.beacon;
                     if (bObj.UUID.toLowerCase() == uuid.toLowerCase() && bObj.Major == major && bObj.Minor == minor) {
                         for (var j = 0; j < service.popList.length; j++) {
                             var hikiyama = service.popList[j];
-                            if (hikiyama.beaconPathAlias == bObj.Identifier) {
-                                hikiyama.accu = accuracy + ' m';
-                                service.popList[j] = hikiyama;
+                            if (hikiyama.hikiyama.beaconPathAlias == bObj.Identifier) {
+                                hikiyama.hikiyama.accu = accuracy;
+                                service.popList.splice(j, 1, hikiyama);
+
+                                service.popList.sort(function(a, b){
+                                    if(parseFloat(a.hikiyama.accu) < parseFloat(b.hikiyama.accu)) return -1;
+                                    if(parseFloat(a.hikiyama.accu) > parseFloat(b.hikiyama.accu)) return 1;
+
+                                    return 0;
+                                });
 
                                 $timeout(function() {
                                     $rootScope.$broadcast('hikiyama:changePopList', service.popList);
