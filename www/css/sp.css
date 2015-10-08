@@ -103,9 +103,9 @@ body {
 
 
 /*ナビゲーションバー*/
-
 .imgNavBarCom.navigation-bar {
     height: auto !important;
+    width:100%;
 }
 
 .imgNavBarCom.navigation-bar .navigation-bar__title {
@@ -113,6 +113,11 @@ body {
     height: auto !important;
     float: none !important;
     line-height: normal !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:100% !important;
+    max-width:100% !important;
 }
 
 .imgNavBarCom.navigation-bar .navigation-bar__title img {
@@ -144,11 +149,17 @@ body {
     padding: 15px !important;
 }
 
+.searchListMod .list__item .row {
+    overflow:hidden;
+}
+
 .searchListMod .col1 {
-    -webkit-box-flex: 0.4;
-    -webkit-flex: 0.4;
-    -moz-flex: 0.4;
-    -ms-flex: 0.4;
+    width:30%;
+    
+    -webkit-box-flex: none;
+    -webkit-flex: none;
+    -moz-flex: none;
+    -ms-flex: none;
 }
 
 .searchListMod .col1 img {
@@ -157,10 +168,16 @@ body {
 }
 
 .searchListMod .col2 {
-    -webkit-box-flex: 1.0;
-    -webkit-flex: 1.0;
-    -moz-flex: 1.0;
-    -ms-flex: 1.0;
+    -webkit-box-flex: none;
+    -webkit-flex: none;
+    -moz-flex: none;
+    -ms-flex: none;
+    
+    
+    width:70%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding-left: 10px;
 }
 
