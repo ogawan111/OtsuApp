@@ -58,6 +58,22 @@
         // Beaconの利用権限確認
         cordova.plugins.locationManager.requestAlwaysAuthorization();
 
+        // bluetoothのチェック
+        var blueToothCheck = function() {
+            bluetoothSerial.isEnabled(
+            function() {
+                $scope.bluetoothEnabled = true;
+            },
+            function() {
+                $scope.bluetoothEnabled = false;
+            }
+            );
+            $scope.$apply();
+        };
+        blueToothCheck();
+        setInterval(blueToothCheck, 3000);
+
+                      
         // 一覧ページへ遷移
         $scope.toList = function() {
             $scope.navi.pushPage('page/list.html', {
