@@ -17,7 +17,6 @@
     });
 
     document.addEventListener('deviceready', function() {
-        localStorage.clear();
         angular.bootstrap(document, ['app']);
         
         // Google Analytics
@@ -28,6 +27,14 @@
         var clas = Object.prototype.toString.call(obj).slice(8, -1);
         return obj !== undefined && obj !== null && clas === type;
     }
+
+function obj_dump(obj) {
+	var txt = '';
+	for (var one in obj){
+		txt += one + "=" + obj[one] + "\n";
+	}
+	console.error(txt);
+}
 
     module.run(function($rootScope, APP_NAME) {
         // 2度押し対応
@@ -50,9 +57,8 @@
      */
     module.controller('AppController', function($scope, $rootScope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
 
-
         // Beaconの利用権限確認
-        cordova.plugins.locationManager.requestAlwaysAuthorization();
+        cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
 
         // bluetoothのチェック
         var blueToothCheck = function() {
@@ -240,6 +246,16 @@
             });
             
         };
+        
+        
+        $scope.isCheck = function(pathAlias) {
+            var checkList = store.get('checkList');
+
+            if(checkList === null || checkList === void 0) {
+                return false;
+            }
+            return (pathAlias in checkList);
+        };
         window.analytics.trackView('一覧画面');
         window.analytics.trackEvent('View', '一覧画面');
     });
@@ -288,7 +304,7 @@
             classToggle: 'on'
         });
         window.analytics.trackView('詳細表示');
-        var title = $scooe.item.title !== void 0 ? ' / ' + $scope.item.title : '';
+        var title = $scope.item.title !== void 0 ? ' / ' + $scope.item.title : '';
         window.analytics.trackEvent('View', '詳細画面' + title);
     });
 
@@ -400,6 +416,17 @@
                                     $rootScope.$broadcast('hikiyama:changePopList', service.popList);
                                 }, 100);
                                 defer.resolve('success');
+                                
+                                // スタンプラリー用にStorageに設定
+                                var checkList = store.get('checkList');
+                            
+                                if(null === checkList || checkList === void 0) {
+                                    checkList = {};
+                                }
+                                if (! (hikiyama.hikiyama.beaconPathAlias in checkList)) {
+                                    checkList[hikiyama.hikiyama.beaconPathAlias] = true;
+                                    store.set('checkList', checkList);
+                                }
                                 return defer.promise; // 既に設定されているためスルーする
                             }
                         }
@@ -440,7 +467,7 @@
                         for (var j = 0; j < service.popList.length; j++) {
                             var hikiyama = service.popList[j];
                             if (hikiyama.hikiyama.beaconPathAlias == bObj.Identifier) {
-                                hikiyama.hikiyama.accu = accuracy;
+                                hikiyama.hikiyama.accu = parseFloat(accuracy) > 0 ? accuracy : 0;
                                 service.popList.splice(j, 1, hikiyama);
 
                                 service.popList.sort(function(a, b){
@@ -460,7 +487,6 @@
                     }
                 });
             }
-
         };
         return service;
     });
