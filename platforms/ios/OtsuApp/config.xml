@@ -45,9 +45,6 @@
     <feature name="UniversalAnalytics">
         <param name="ios-package" value="UniversalAnalyticsPlugin" />
     </feature>
-    <feature name="BluetoothSerial">
-        <param name="ios-package" onload="true" value="MEGBluetoothSerial" />
-    </feature>
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <name>大津祭曳山ストーリーテラー</name>
@@ -123,4 +120,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <feature name="BluetoothSerial">
+        <param name="ios-package" onload="true" value="MEGBluetoothSerial" />
+    </feature>
 </widget>

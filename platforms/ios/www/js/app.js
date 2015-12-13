@@ -201,7 +201,7 @@ function obj_dump(obj) {
     /**
      * ビーコン検知時のダイアログ表示Ctrl
      */
-    module.controller('PopListController', function($scope, hikiyamaService) {
+    module.controller('PopListController', function($scope, hikiyamaService, $rootScope) {
         $scope.items = hikiyamaService.popList;
 
         $scope.$on('hikiyama:changePopList', function(data) {
@@ -220,6 +220,11 @@ function obj_dump(obj) {
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
+                      
+        $scope.close = function() {
+            $rootScope.listDialog.hide();
+        };
+                      
         window.analytics.trackView('Beacon検出画面');
         window.analytics.trackEvent('View', 'Beacon検出画面');
     });
@@ -256,6 +261,15 @@ function obj_dump(obj) {
             }
             return (pathAlias in checkList);
         };
+        
+        $scope.onReset = function() {
+            navigator.notification.confirm('スタンプラリーの情報をリセットします。　よろしいですか？', function(btnIndex){
+                if(btnIndex === 1) {
+                    store.set('checkList', null);
+                    navigator.notification.alert('リセットが完了しました。',function(){}, '情報', 'OK');
+                }
+            }, '確認',['はい', 'いいえ']);
+        }
         window.analytics.trackView('一覧画面');
         window.analytics.trackEvent('View', '一覧画面');
     });
@@ -297,6 +311,21 @@ function obj_dump(obj) {
                 controls: false,
                 captions: false
             });
+
+            if($scope.item.voice !== null) {
+                $scope.onsei = new Media($scope.item.voice,
+                    function () {
+                        console.log("playAudio():Audio Success");
+                    },
+                    function (err) {
+                        console.log("playAudio():Audio Error: " + err);
+                    }
+                );
+                $scope.onsei.play();
+                $scope.$on('$destroy', function () {
+                    $scope.onsei.stop();
+                });
+            }
         });
         $('.accordionMod').accordion({
             classHead: '.title',

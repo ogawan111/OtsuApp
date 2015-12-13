@@ -261,6 +261,15 @@ function obj_dump(obj) {
             }
             return (pathAlias in checkList);
         };
+        
+        $scope.onReset = function() {
+            navigator.notification.confirm('スタンプラリーの情報をリセットします。　よろしいですか？', function(btnIndex){
+                if(btnIndex === 1) {
+                    store.set('checkList', null);
+                    navigator.notification.alert('リセットが完了しました。',function(){}, '情報', 'OK');
+                }
+            }, '確認',['はい', 'いいえ']);
+        }
         window.analytics.trackView('一覧画面');
         window.analytics.trackEvent('View', '一覧画面');
     });
