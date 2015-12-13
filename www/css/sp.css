@@ -408,3 +408,10 @@ iframe {
     padding-bottom:10px;
 }
 
+/*閉じるボタン*/
+.button--large {
+    margin-top:10px !important;
+    width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

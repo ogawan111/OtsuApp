@@ -200,7 +200,7 @@
     /**
      * ビーコン検知時のダイアログ表示Ctrl
      */
-    module.controller('PopListController', function($scope, hikiyamaService) {
+    module.controller('PopListController', function($scope, hikiyamaService, $rootScope) {
         $scope.items = hikiyamaService.popList;
 
         $scope.$on('hikiyama:changePopList', function(data) {
@@ -219,6 +219,11 @@
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
+                      
+        $scope.close = function() {
+            $rootScope.listDialog.hide();
+        };
+                      
     });
 
     /**
