@@ -2,7 +2,7 @@
     'use strict';
     var module = angular.module('app', ['onsen', 'angular-storage', 'ngSanitize']);
     module.constant('APP_VERSION', '1.0.0');
-    module.constant('APP_NAME', '大津祭りストーリーテラー');
+    module.constant('APP_NAME', '大津祭ストーリーテラー');
     module.constant('SERVER_URL', 'http://ec2-52-24-104-59.us-west-2.compute.amazonaws.com/drupal/');
 
     // ng-repeat完了を監視
@@ -19,15 +19,10 @@
     document.addEventListener('deviceready', function() {
         localStorage.clear();
         angular.bootstrap(document, ['app']);
+        
+        // Google Analytics
+        window.analytics.startTrackerWithId('UA-71348216-1');
     }, false);
-
-    function obj_dump(obj) {
-        var txt = '';
-        for (var one in obj) {
-            txt += one + "=" + obj[one] + "\n";
-        }
-        console.log(txt);
-    }
 
     function is(type, obj) {
         var clas = Object.prototype.toString.call(obj).slice(8, -1);
@@ -55,6 +50,7 @@
      */
     module.controller('AppController', function($scope, $rootScope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
 
+
         // Beaconの利用権限確認
         cordova.plugins.locationManager.requestAlwaysAuthorization();
 
@@ -81,7 +77,6 @@
             });
         };
 
-        // ダイアログを表示
         $scope.showDialog = function() {
             if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
                 ons.createDialog('page/pop_list.html').then(function(dialog) {
@@ -174,8 +169,6 @@
                  */
                 delegate.didExitRegion = function(pluginResult) {
                     var beacon = pluginResult.region;
-                    obj_dump(beacon);
-
                     hikiyamaService.removePopList(beacon.identifier);
                 };
 
@@ -195,6 +188,8 @@
         }, function(msg) {
             navigator.notification.alert(msg, function() {});
         });
+        window.analytics.trackView('Top画面');
+        window.analytics.trackEvent('View', 'Top画面');
     });
 
     /**
@@ -219,11 +214,16 @@
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
+<<<<<<< HEAD
                       
         $scope.close = function() {
             $rootScope.listDialog.hide();
         };
                       
+=======
+        window.analytics.trackView('Beacon検出画面');
+        window.analytics.trackEvent('View', 'Beacon検出画面');
+>>>>>>> acc1ea5c4fe1b3ce8acc14780c55fa12badcfbb7
     });
 
     /**
@@ -246,7 +246,10 @@
             }, function() {
                 navigator.notification.alert('詳細の取得に失敗しました');
             });
+            
         };
+        window.analytics.trackView('一覧画面');
+        window.analytics.trackEvent('View', '一覧画面');
     });
 
     module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, beaconService, hikiyamaService, store) {
@@ -292,6 +295,9 @@
             classBody: '.in',
             classToggle: 'on'
         });
+        window.analytics.trackView('詳細表示');
+        var title = $scooe.item.title !== void 0 ? ' / ' + $scope.item.title : '';
+        window.analytics.trackEvent('View', '詳細画面' + title);
     });
 
     /**
@@ -384,7 +390,6 @@
                             var obj = service.popList[i];
 
                             if (obj.hikiyama.beaconPathAlias === bObj.Identifier) {
-                                console.log('skip !!');
                                 defer.resolve('success');
                                 return defer.promise; // 既に設定されているためスルーする
                             }

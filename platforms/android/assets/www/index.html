@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width,user-scalable=0">
     <!-- JS dependencies (order matters!) -->
     <script src="js/platformOverrides.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
@@ -34,7 +35,7 @@
         <ons-page>
             <div id="wrapper">
                 <h1 id="appLogo"><img src="img/applogo.png" height="339" width="518" alt=""></h1>
-                <p id="hikiyamaSearch">
+                <p id="hikiyamaSearch" ng-click="showDialog()">
                     <span class="anime"><img src="img/hikiyamasearch_anime.gif" height="142" width="154" alt=""></span>
                     <span class="bg"><img src="img/hikiyamasearch_search.png" height="264" width="264" alt=""></span>
                 </p>
