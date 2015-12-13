@@ -262,6 +262,20 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-bluetooth-serial/www/bluetoothSerial.js",
+        "id": "cordova-plugin-bluetooth-serial.bluetoothSerial",
+        "clobbers": [
+            "window.bluetoothSerial"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-google-analytics/www/analytics.js",
+        "id": "cordova-plugin-google-analytics.UniversalAnalytics",
+        "clobbers": [
+            "analytics"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -276,7 +290,9 @@ module.exports.metadata =
     "org.apache.cordova.geolocation": "0.3.12",
     "org.apache.cordova.inappbrowser": "0.6.0",
     "org.apache.cordova.media": "0.2.16",
-    "org.apache.cordova.dialogs": "0.3.0"
+    "org.apache.cordova.dialogs": "0.3.0",
+    "cordova-plugin-bluetooth-serial": "0.4.4",
+    "cordova-plugin-google-analytics": "0.8.1"
 }
 // BOTTOM OF METADATA
 });

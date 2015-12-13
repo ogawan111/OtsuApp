@@ -19,6 +19,9 @@
     document.addEventListener('deviceready', function() {
         localStorage.clear();
         angular.bootstrap(document, ['app']);
+        
+        // Google Analytics
+        window.analytics.startTrackerWithId('UA-71348216-1');
     }, false);
 
     function is(type, obj) {
@@ -47,9 +50,26 @@
      */
     module.controller('AppController', function($scope, $rootScope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
 
+
         // Beaconの利用権限確認
         cordova.plugins.locationManager.requestAlwaysAuthorization();
 
+        // bluetoothのチェック
+        var blueToothCheck = function() {
+            bluetoothSerial.isEnabled(
+            function() {
+                $scope.bluetoothEnabled = true;
+            },
+            function() {
+                $scope.bluetoothEnabled = false;
+            }
+            );
+            $scope.$apply();
+        };
+        blueToothCheck();
+        setInterval(blueToothCheck, 3000);
+
+                      
         // 一覧ページへ遷移
         $scope.toList = function() {
             $scope.navi.pushPage('page/list.html', {
@@ -168,6 +188,8 @@
         }, function(msg) {
             navigator.notification.alert(msg, function() {});
         });
+        window.analytics.trackView('Top画面');
+        window.analytics.trackEvent('View', 'Top画面');
     });
 
     /**
@@ -192,6 +214,8 @@
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
+        window.analytics.trackView('Beacon検出画面');
+        window.analytics.trackEvent('View', 'Beacon検出画面');
     });
 
     /**
@@ -214,7 +238,10 @@
             }, function() {
                 navigator.notification.alert('詳細の取得に失敗しました');
             });
+            
         };
+        window.analytics.trackView('一覧画面');
+        window.analytics.trackEvent('View', '一覧画面');
     });
 
     module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, beaconService, hikiyamaService, store) {
@@ -260,6 +287,9 @@
             classBody: '.in',
             classToggle: 'on'
         });
+        window.analytics.trackView('詳細表示');
+        var title = $scooe.item.title !== void 0 ? ' / ' + $scope.item.title : '';
+        window.analytics.trackEvent('View', '詳細画面' + title);
     });
 
     /**
