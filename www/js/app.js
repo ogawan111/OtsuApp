@@ -214,16 +214,13 @@
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
-<<<<<<< HEAD
                       
         $scope.close = function() {
             $rootScope.listDialog.hide();
         };
                       
-=======
         window.analytics.trackView('Beacon検出画面');
         window.analytics.trackEvent('View', 'Beacon検出画面');
->>>>>>> acc1ea5c4fe1b3ce8acc14780c55fa12badcfbb7
     });
 
     /**
