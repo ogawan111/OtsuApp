@@ -286,6 +286,21 @@
                 controls: false,
                 captions: false
             });
+
+            if($scope.item.voice !== null) {
+                $scope.onsei = new Media($scope.item.voice,
+                    function () {
+                        console.log("playAudio():Audio Success");
+                    },
+                    function (err) {
+                        console.log("playAudio():Audio Error: " + err);
+                    }
+                );
+                $scope.onsei.play();
+                $scope.$on('$destroy', function () {
+                    $scope.onsei.stop();
+                });
+            }
         });
         $('.accordionMod').accordion({
             classHead: '.title',
@@ -293,7 +308,7 @@
             classToggle: 'on'
         });
         window.analytics.trackView('詳細表示');
-        var title = $scooe.item.title !== void 0 ? ' / ' + $scope.item.title : '';
+        var title = $scope.item.title !== void 0 ? ' / ' + $scope.item.title : '';
         window.analytics.trackEvent('View', '詳細画面' + title);
     });
 
