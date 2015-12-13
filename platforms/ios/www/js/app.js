@@ -2,7 +2,7 @@
     'use strict';
     var module = angular.module('app', ['onsen', 'angular-storage', 'ngSanitize']);
     module.constant('APP_VERSION', '1.0.0');
-    module.constant('APP_NAME', '大津祭りストーリーテラー');
+    module.constant('APP_NAME', '大津祭ストーリーテラー');
     module.constant('SERVER_URL', 'http://ec2-52-24-104-59.us-west-2.compute.amazonaws.com/drupal/');
 
     // ng-repeat完了を監視
@@ -20,14 +20,6 @@
         localStorage.clear();
         angular.bootstrap(document, ['app']);
     }, false);
-
-    function obj_dump(obj) {
-        var txt = '';
-        for (var one in obj) {
-            txt += one + "=" + obj[one] + "\n";
-        }
-        console.log(txt);
-    }
 
     function is(type, obj) {
         var clas = Object.prototype.toString.call(obj).slice(8, -1);
@@ -65,7 +57,6 @@
             });
         };
 
-        // ダイアログを表示
         $scope.showDialog = function() {
             if (null === $rootScope.listDialog || $rootScope.listDialog === void 0) {
                 ons.createDialog('page/pop_list.html').then(function(dialog) {
@@ -158,8 +149,6 @@
                  */
                 delegate.didExitRegion = function(pluginResult) {
                     var beacon = pluginResult.region;
-                    obj_dump(beacon);
-
                     hikiyamaService.removePopList(beacon.identifier);
                 };
 
@@ -363,7 +352,6 @@
                             var obj = service.popList[i];
 
                             if (obj.hikiyama.beaconPathAlias === bObj.Identifier) {
-                                console.log('skip !!');
                                 defer.resolve('success');
                                 return defer.promise; // 既に設定されているためスルーする
                             }
