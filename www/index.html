@@ -37,7 +37,14 @@
                 <h1 id="appLogo"><img src="img/applogo.png" height="339" width="518" alt=""></h1>
                 <p id="hikiyamaSearch" ng-click="showDialog()">
                     <span class="anime"><img src="img/hikiyamasearch_anime.gif" height="142" width="154" alt=""></span>
-                    <span class="bg"><img src="img/hikiyamasearch_search.png" height="264" width="264" alt=""></span>
+                    <span class="bg">
+                        <span ng-show="bluetoothEnabled" class="ng-hide">
+                            <img src="img/hikiyamasearch_search.png" height="264" width="264" alt="">
+                        </span>
+                        <span ng-hide="bluetoothEnabled" class="ng-hide">
+                            <img src="img/hikiyamasearch_search_off.png" height="264" width="264" alt="">
+                        </span>
+                    </span>
                 </p>
             </div>
             <p id="hikiyamaListBtn">

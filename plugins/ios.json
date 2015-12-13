@@ -10,7 +10,7 @@
                     "CoreBluetooth.framework": [
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "CoreLocation.framework": [
@@ -84,6 +84,12 @@
                             "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"BluetoothSerial\"><param name=\"ios-package\" onload=\"true\" value=\"MEGBluetoothSerial\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -135,6 +141,9 @@
             "PACKAGE_NAME": "team.galaxy.otsuApp"
         },
         "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "team.galaxy.otsuApp"
+        },
+        "cordova-plugin-bluetooth-serial": {
             "PACKAGE_NAME": "team.galaxy.otsuApp"
         }
     },
