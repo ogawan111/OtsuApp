@@ -41,6 +41,9 @@ function obj_dump(obj) {
         $rootScope.clickExec = false;
         // 
         $rootScope.rbExec = false;
+        // 曳山が取得済みかどうか
+        $rootScope.isReady = false;
+
         /**
          * アラートダイアログ
          */
@@ -78,9 +81,14 @@ function obj_dump(obj) {
                       
         // 一覧ページへ遷移
         $scope.toList = function() {
+
+            if(!$rootScope.isReady) {
+                navigator.notification.alert('曳山情報の取得中です', function(){})
+            }else {
             $scope.navi.pushPage('page/list.html', {
                 animation: 'slide'
-            });
+            }); 
+            }
         };
 
         $scope.showDialog = function() {
@@ -101,6 +109,8 @@ function obj_dump(obj) {
         result.then(function(msg) {
             // 曳山の取得済み
             result2.then(function(msg) {
+
+                $rootScope.isReady = true;
 
                 var delegate = new cordova.plugins.locationManager.Delegate();
 
