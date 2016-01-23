@@ -314,6 +314,19 @@ function obj_dump(obj) {
             }
         });
 
+          // 音声の切り替え
+          $scope.onseiOff = function() {
+              $scope.onseiSwitch = false;
+              $scope.onsei.stop();
+          };
+     
+          $scope.onseiOn = function() {
+              $scope.onseiSwitch = true;
+              $scope.onsei.play();
+          };
+          $scope.onseiSwitch = true;
+                      
+                      
         $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
             $('.bxslider').bxSlider({
                 mode: 'horizontal',
