@@ -284,7 +284,7 @@ function obj_dump(obj) {
         window.analytics.trackEvent('View', '一覧画面');
     });
 
-    module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, beaconService, hikiyamaService, store) {
+    module.controller('DetailController', function($scope, $http, $sce, SERVER_URL, $timeout, beaconService, hikiyamaService, store) {
         $scope.item = hikiyamaService.detailObj;
         $scope.imageList = [];
 
@@ -322,16 +322,21 @@ function obj_dump(obj) {
                 captions: false
             });
 
+                   
             if($scope.item.voice !== null) {
-                $scope.onsei = new Media($scope.item.voice,
-                    function () {
-                        console.log("playAudio():Audio Success");
-                    },
-                    function (err) {
-                        console.log("playAudio():Audio Error: " + err);
-                    }
-                );
-                $scope.onsei.play();
+                // 詳細ページを開いた瞬間に音声を読み込んでフリーズするのを防ぐ
+                $timeout(function() {
+                     $scope.onsei = new Media($scope.item.voice,
+                          function () {
+                              console.log("playAudio():Audio Success");
+                          },
+                          function (err) {
+                              console.log("playAudio():Audio Error: " + err);
+                          }
+                      );
+                     $scope.onsei.play();
+                }, 1000);
+
                 $scope.$on('$destroy', function () {
                     $scope.onsei.stop();
                 });
