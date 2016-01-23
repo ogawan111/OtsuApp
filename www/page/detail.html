@@ -11,6 +11,15 @@
         <ul class="bxslider">
             <li ng-repeat="img in imageList" bxslider-directive><img src="{{img.src}}" alt="{{img.alt}}" height="388" width="580" title="" /></li>
         </ul>
+
+        
+        <span ng-show="onseiSwitch">
+            <ons-button ng-click="onseiOff()" modifier="large" class="button-brown"><i class="fa fa-volume-off"></i> 音声を止める</ons-button>
+        </span>
+        <span ng-hide="onseiSwitch">
+            <ons-button ng-click="onseiOn()" modifier="large" class="button-brown"><i class="fa fa-volume-up"></i> 音声を再生</ons-button>
+        </span>
+
         <h2 class="headCom">からくりの説明</h2>
         <div class="wysiwygCom">
             <p ng-bind="item.karakuriDiscription"></p>

@@ -415,3 +415,8 @@ iframe {
     margin-left: auto !important;
     margin-right: auto !important;
 }
+
+/*音声スイッチボタン*/
+.button-brown {
+    background-color: #a3867e !important;
+}
