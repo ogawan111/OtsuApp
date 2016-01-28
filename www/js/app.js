@@ -18,7 +18,7 @@
 
     document.addEventListener('deviceready', function() {
         angular.bootstrap(document, ['app']);
-        
+
         // Google Analytics
         window.analytics.startTrackerWithId('UA-71348216-1');
     }, false);
@@ -39,7 +39,7 @@ function obj_dump(obj) {
     module.run(function($rootScope, APP_NAME) {
         // 2度押し対応
         $rootScope.clickExec = false;
-        // 
+        //
         $rootScope.rbExec = false;
         // 曳山が取得済みかどうか
         $rootScope.isReady = false;
@@ -61,7 +61,7 @@ function obj_dump(obj) {
     module.controller('AppController', function($scope, $rootScope, $http, $timeout, SERVER_URL, beaconService, hikiyamaService, store) {
 
         // Beaconの利用権限確認
-        cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
+        cordova.plugins.locationManager.requestWhenInUseAuthorization();
 
         // bluetoothのチェック
         var blueToothCheck = function() {
@@ -78,7 +78,7 @@ function obj_dump(obj) {
         blueToothCheck();
         setInterval(blueToothCheck, 3000);
 
-                      
+
         // 一覧ページへ遷移
         $scope.toList = function() {
 
@@ -87,7 +87,7 @@ function obj_dump(obj) {
             }else {
             $scope.navi.pushPage('page/list.html', {
                 animation: 'slide'
-            }); 
+            });
             }
         };
 
@@ -230,11 +230,11 @@ function obj_dump(obj) {
                 navigator.notification.alert('詳細の取得に失敗しました', function() {});
             });
         };
-                      
+
         $scope.close = function() {
             $rootScope.listDialog.hide();
         };
-                      
+
         window.analytics.trackView('Beacon検出画面');
         window.analytics.trackEvent('View', 'Beacon検出画面');
     });
@@ -259,10 +259,10 @@ function obj_dump(obj) {
             }, function() {
                 navigator.notification.alert('詳細の取得に失敗しました');
             });
-            
+
         };
-        
-        
+
+
         $scope.isCheck = function(pathAlias) {
             var checkList = store.get('checkList');
 
@@ -271,9 +271,9 @@ function obj_dump(obj) {
             }
             return (pathAlias in checkList);
         };
-        
+
         $scope.onReset = function() {
-            navigator.notification.confirm('スタンプラリーの情報をリセットします。　よろしいですか？', function(btnIndex){
+            navigator.notification.confirm('検出した曳山の情報をリセットします。　よろしいですか？', function(btnIndex){
                 if(btnIndex === 1) {
                     store.set('checkList', null);
                     navigator.notification.alert('リセットが完了しました。',function(){}, '情報', 'OK');
@@ -319,14 +319,14 @@ function obj_dump(obj) {
               $scope.onseiSwitch = false;
               $scope.onsei.stop();
           };
-     
+
           $scope.onseiOn = function() {
               $scope.onseiSwitch = true;
               $scope.onsei.play();
           };
           $scope.onseiSwitch = true;
-                      
-                      
+
+
         $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
             $('.bxslider').bxSlider({
                 mode: 'horizontal',
@@ -335,7 +335,7 @@ function obj_dump(obj) {
                 captions: false
             });
 
-                   
+
             if($scope.item.voice !== null) {
                 // 詳細ページを開いた瞬間に音声を読み込んでフリーズするのを防ぐ
                 $timeout(function() {
@@ -473,10 +473,10 @@ function obj_dump(obj) {
                                     $rootScope.$broadcast('hikiyama:changePopList', service.popList);
                                 }, 100);
                                 defer.resolve('success');
-                                
+
                                 // スタンプラリー用にStorageに設定
                                 var checkList = store.get('checkList');
-                            
+
                                 if(null === checkList || checkList === void 0) {
                                     checkList = {};
                                 }
